@@ -8,7 +8,10 @@ import {
   getRedirectResult, 
   GoogleAuthProvider 
 } from 'firebase/auth';
-import { auth } from '../firebase/config.js';
+import { auth, db } from '../firebase/config.js';
+import { collection, addDoc } from "firebase/firestore"; 
+
+
 
 const FirebaseContext = createContext(null);
 
