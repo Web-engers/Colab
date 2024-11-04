@@ -1,5 +1,6 @@
 import React from 'react'
 import { useFirebase } from './context/Firebase'
+import ResponsiveDrawer from './pages/Home'
 
 const App = () => {
 
@@ -7,7 +8,7 @@ const App = () => {
 
   return (
     <div>
-      <button onClick={firebase.signinWithGoogle}>Sign in with google</button>
+      <ResponsiveDrawer/>
     </div>
   )
 }
