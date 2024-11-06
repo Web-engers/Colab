@@ -10,7 +10,18 @@ export const FabricJSCanvasProvider = ({ children }) => {
     const canvasEl = useRef(null);
     const [canvas, setCanvas] = useState(null);
 
-   
+    useEffect(() => {
+        if (canvasEl.current) {
+            
+            const fabricCanvas = new fabric.Canvas(canvasEl.current, {
+                backgroundColor: 'white',
+            });
+            setCanvas(fabricCanvas);
+
+            
+            return () => fabricCanvas.dispose();
+        }
+    }, []);
 
     const addRectangle = () => {
         if (canvas) {
