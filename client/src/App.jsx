@@ -1,15 +1,17 @@
-import React from 'react'
-import { useFirebase } from './context/Firebase'
-
+import React from 'react';
+import { useFirebase } from './context/Firebase';
+// import FourOFour from './pages/FourOFour';
+import ResponsiveDrawer from './pages/Home'; 
+import { RoomProvider } from "@liveblocks/react";
+import WhiteBoard from './components/WhiteBoard';
 const App = () => {
-
-  const firebase = useFirebase()
-
+  const firebase = useFirebase(); 
   return (
-    <div>
-      <button onClick={firebase.signinWithGoogle}>Sign in with google</button>
-    </div>
-  )
-}
+    <RoomProvider id={"Room-1"}>
+      <WhiteBoard name = "priyam"/>
+      {/* <ResponsiveDrawer/> */}
+    </RoomProvider>
+  );
+};
 
-export default App
+export default App;
