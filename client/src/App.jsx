@@ -1,20 +1,27 @@
 import React from 'react';
 import { useFirebase } from './context/Firebase';
-// import FourOFour from './pages/FourOFour';
-import ResponsiveDrawer from './pages/Home'; 
-import { RoomProvider } from "@liveblocks/react";
-import WhiteBoard from './components/WhiteBoard';
-import Chat from './components/Chat';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Signin from './pages/Signin';
+import Home from './pages/Home';
+import SignUpPage from './pages/Signup';
+import Create from './pages/Create';
+
 const App = () => {
-  const firebase = useFirebase(); 
+  const { currentUser, loading } = useFirebase();
+
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
+
   return (
-    // <RoomProvider id={"Room-1"}>
-    //   <WhiteBoard name = "priyam"/>
-    //   <ResponsiveDrawer/>
-    // </RoomProvider>
-    <div className="min-h-screen flex items-center justify-center bg-gray-200">
-    <Chat />
-  </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/signin' element={currentUser ? <Home/> : <Signin/>}/>
+        <Route path='/signup' element={currentUser ? <Home/> : <SignUpPage/>}/>
+        <Route path='/' element={currentUser ? <Home/> : <Signin/>}/>
+        <Route path='/create' element={currentUser ? <Create/> : <Signin/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 };
 

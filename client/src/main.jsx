@@ -10,7 +10,6 @@ import {
 createRoot(document.getElementById('root')).render(
   <StrictMode>
       <FirebaseProvider>
-  
     <LiveblocksProvider publicApiKey={"pk_dev_qYhZM1h5dv4UncKhgR0rH_wWRLdMFTMOx1LCwymNv8vmlRg3tMFX63Uej2DwhAM_"}>
       <RoomProvider id="my-room">
         <App/>
