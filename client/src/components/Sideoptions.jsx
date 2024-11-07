@@ -2,70 +2,74 @@ import React, { useState } from 'react';
 import { TbTemplate, TbTextSize } from "react-icons/tb";
 import { FaRegImage, FaShapes } from "react-icons/fa";
 import { MdOutlineDraw } from "react-icons/md";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-// import Templates from './Templates';
-// import Image from './Image';
-// import Text from './Text';
-import Shapes from './Shapes';
-//import Draw from './Draw';
+import { useCanvas } from '../context/CanvasContext'; // Import the useCanvas hook to access the canvas context
+import * as fabric from "fabric";
 
 const Sideoptions = () => {
     const [activeOption, setActiveOption] = useState(null);
+    const { canvas } = useCanvas(); // Get the canvas from context
 
     const handleClick = (option) => {
         setActiveOption(option);
+
+        switch (option) {
+            case "Text":
+                const text = new fabric.Text('Hello World', { left: 100, top: 100 });
+                canvas.add(text);
+                canvas.renderAll();
+                break;
+            case "Shapes":
+                const rect = new fabric.Rect({
+                    left: 150,
+                    top: 150,
+                    fill: 'red',
+                    width: 100,
+                    height: 100
+                });
+                canvas.add(rect);
+                canvas.renderAll();
+                break;
+            case "Draw":
+                // Toggle drawing mode
+                canvas.isDrawingMode = !canvas.isDrawingMode;
+                break;
+            case "Image":
+                const imageUrl = 'path_to_image.jpg'; // Placeholder, you can dynamically get this
+                fabric.Image.fromURL(imageUrl, (img) => {
+                    img.set({
+                        left: 100,
+                        top: 100
+                    });
+                    canvas.add(img);
+                    canvas.renderAll();
+                });
+                break;
+            case "Templates":
+                // Handle templates (you can create predefined templates like background images, shapes, etc.)
+                break;
+            default:
+                break;
+        }
     };
 
     return (
-        <div className='flex'>
-            {/* Sidebar */}
-            <div className='flex flex-col gap-[60px] px-5 w-[80px] p-3 bg-white h-screen fixed'>
-                <button 
-                    className='flex flex-col gap-2 justify-center items-center h-28 w-15 focus:bg-slate-200 rounded-lg'
-                    onClick={() => handleClick("Templates")}
-                >
-                    <TbTemplate size={30}/>
-                    <span>Templates</span>
+        <div>
+            <div className='flex flex-col gap-[20px] bg-white fixed p-1 px-2 m-3 py-4 rounded-lg min-w-6 shadow-lg mt-[80px]'>
+                <button onClick={() => handleClick("Templates")}>
+                    <TbTemplate size={28} />
                 </button>
-                <button 
-                    className='flex flex-col gap-2 justify-center items-center h-28 w-15 focus:bg-slate-200 rounded-lg'
-                    onClick={() => handleClick("Image")}
-                >
-                    <FaRegImage size={30}/>
-                    <span>Image</span>
+                <button onClick={() => handleClick("Image")}>
+                    <FaRegImage size={28} />
                 </button>
-                <button 
-                    className='flex flex-col gap-2 justify-center items-center h-28 w-15 focus:bg-slate-200 rounded-lg'
-                    onClick={() => handleClick("Text")}
-                >
-                    <TbTextSize size={30} />
-                    <span>Text</span>
+                <button onClick={() => handleClick("Text")}>
+                    <TbTextSize size={28} />
                 </button>
-                <button 
-                    className='flex flex-col gap-2 justify-center items-center h-28 w-15 focus:bg-slate-200 rounded-lg'
-                    onClick={() => handleClick("Shapes")}
-                >
-                    <FaShapes size={30}/>
-                    <span>Shapes</span>
+                <button onClick={() => handleClick("Shapes")}>
+                    <FaShapes size={28} />
                 </button>
-                <button 
-                    className='flex flex-col gap-2 justify-center items-center h-28 w-15 focus:bg-slate-200 rounded-lg'
-                    onClick={() => handleClick("Draw")}
-                >
-                    <MdOutlineDraw size={30}/>
-                    <span>Draw</span>
+                <button onClick={() => handleClick("Draw")}>
+                    <MdOutlineDraw size={28} />
                 </button>
-                <ToastContainer position="bottom-right" autoClose={2000} hideProgressBar />
-            </div>
-
-            {/* Content Area */}
-            <div className="ml-[100px] p-5">
-                {/* {activeOption === "Templates" && <Templates />}
-                {activeOption === "Image" && <Image />}
-                {activeOption === "Text" && <Text />} */}
-                {activeOption === "Shapes" && <Shapes />}
-                {/* {activeOption === "Draw" && <Draw />} */}
             </div>
         </div>
     );
