@@ -13,7 +13,7 @@ function WhiteBoard({name}) {
       ];
   return (
     <div>
-      <h1>hi this is {name}</h1>
+      <h1>this is {name}</h1>
       {
         cursors.map(({ x, y, connectionId }) => (
           <Cursor
