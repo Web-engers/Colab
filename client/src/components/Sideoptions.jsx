@@ -14,7 +14,7 @@ const Sideoptions = () => {
 
         switch (option) {
             case "Text":
-                const text = new fabric.Text('Hello World', { left: 100, top: 100 });
+                const text = new fabric.Textbox(' jbw', { left: 100, top: 100 });
                 canvas.add(text);
                 canvas.renderAll();
                 break;
