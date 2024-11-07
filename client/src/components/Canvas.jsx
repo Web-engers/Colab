@@ -23,7 +23,7 @@ const Canvas = ({width=400, height=400}) => {
         return () => {
             fabricCanvas.dispose();
         };
-    }, [width, height]);  // Re-run when width/height props change
+    }, [width, height]);  
 
     return (
         <canvas

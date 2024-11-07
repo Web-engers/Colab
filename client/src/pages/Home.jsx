@@ -8,6 +8,7 @@ const Home = () => {
     <div>
         Home
         <button onClick={()=>signOut()}>Signout</button>
+        <button onClick={()=>addNewBoard()}>CreateNew</button>
     </div>
 
   )

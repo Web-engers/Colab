@@ -4,6 +4,10 @@ import { FaRegImage, FaShapes } from "react-icons/fa";
 import { MdOutlineDraw } from "react-icons/md";
 import { useCanvas } from '../context/CanvasContext'; // Import the useCanvas hook to access the canvas context
 import * as fabric from "fabric";
+import { Unstable_Popup as Popup } from '@mui/base/Unstable_Popup';
+import { getStroke } from 'perfect-freehand'
+
+
 
 const Sideoptions = () => {
     const [activeOption, setActiveOption] = useState(null);
@@ -31,6 +35,7 @@ const Sideoptions = () => {
                 break;
             case "Draw":
                 // Toggle drawing mode
+                
                 canvas.isDrawingMode = !canvas.isDrawingMode;
                 break;
             case "Image":
