@@ -1,3 +1,4 @@
+// Chat.js
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
@@ -6,37 +7,52 @@ const socket = io('http://localhost:3001');
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+
   useEffect(() => {
     socket.on('chatMessage', (msg) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
+
     return () => {
       socket.off('chatMessage');
     };
   }, []);
+
   const sendMessage = () => {
     if (message.trim()) {
-      const username = 'User'; 
+      const username = 'User'; // Replace with actual username logic if needed
       socket.emit('chatMessage', { username, message });
       setMessage('');
     }
   };
 
   return (
-    <div className="p-4 bg-gray-100 rounded-md shadow-lg h-full flex flex-col">
-      <h2 className="text-xl font-bold mb-4">Chat Room</h2>
-      <div className="flex-grow overflow-y-auto bg-white p-4 rounded-lg mb-4 border">
+    <div className="h-full flex flex-col">
+      {/* Chat Header */}
+      <div className="h-12 bg-gray-200 text-gray-800 flex items-center justify-center p-2 font-semibold">
+        Chat Room
+      </div>
+
+      {/* Chat Messages Area */}
+      <div className="flex-grow overflow-y-auto bg-white p-4 space-y-2">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`flex flex-col mb-2 ${index % 2 === 0 ? 'bg-blue-100' : 'bg-gray-200'} p-2 rounded-md`}
+            className={`flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}
           >
-            <span className="font-semibold text-sm text-gray-700">{msg.username}</span>
-            <div className="text-gray-800">{msg.message}</div>
+            <div
+              className={`rounded-lg p-3 max-w-xs text-sm ${
+                index % 2 === 0 ? 'bg-blue-400 text-white' : 'bg-purple-400 text-white'
+              }`}
+            >
+              <span className="block">{msg.message}</span>
+            </div>
           </div>
         ))}
       </div>
-      <div className="flex mt-auto">
+
+      {/* Message Input Section */}
+      <div className="bg-gray-100 p-2 flex items-center">
         <input
           type="text"
           value={message}

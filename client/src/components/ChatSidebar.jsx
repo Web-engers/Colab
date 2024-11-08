@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, IconButton } from '@mui/material';
+import { Drawer, IconButton, Box } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import Chat from './Chat';
 
@@ -12,28 +12,33 @@ const ChatSideBar = () => {
 
   return (
     <div>
+      {/* Button to open the chat sidebar */}
       <IconButton
         color="primary"
         onClick={toggleDrawer(true)}
-        className="fixed bottom-5 right-5 bg-blue-500 hover:bg-blue-700 text-white rounded-full p-2"
+        className="fixed bottom-5 right-5 bg-blue-500 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg z-50"
       >
-        <ChatIcon fontSize="large" />
+        <ChatIcon fontSize="large" className="fixed bottom-5 right-5" />
       </IconButton>
+
+      {/* Drawer for chat (right side) */}
       <Drawer
         anchor="right"
         open={isOpen}
         onClose={toggleDrawer(false)}
         sx={{
           '& .MuiDrawer-paper': {
-            width: 300,
-            padding: 2,
-            backgroundColor: '#f7f7f7',
+            width: 360, // Adjust width as needed
+            height: '100vh',
+            padding: 0,
+            backgroundColor: '#f5f5f5',
+            boxShadow: 'none',
           },
         }}
       >
-        <div className="w-80 p-4 h-full flex flex-col bg-gray-100">
+        <Box className="w-full h-full flex flex-col">
           <Chat />
-        </div>
+        </Box>
       </Drawer>
     </div>
   );
