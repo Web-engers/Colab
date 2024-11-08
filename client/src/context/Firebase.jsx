@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore, collection, addDoc, doc, setDoc } from 'firebase/firestore'; // Firestore imports
+import { getFirestore, collection, addDoc, doc, setDoc, getDoc } from 'firebase/firestore'; // Firestore imports
 
 // Firebase configuration
 const firebaseConfig = {
@@ -37,15 +37,21 @@ export const FirebaseProvider = ({ children }) => {
   }, []);
 
   // Add user to Firestore
-  const addUserToFirestore = async (uid, email, name = "guest") => {
+  const addUserToFirestore = async (uid, email, name = "guest", photo="https://avatar.iran.liara.run/public/16") => {
     try {
       const userRef = doc(db, "users", uid);
+      const userDoc = await getDoc(userRef);
+      
+      if (userDoc.exists()) return; // Do not overwrite existing user data
+      
       const userData = {
+        id: uid,
         email: email,
         name: name,
-        boards: [], // Initial empty array for boards
+        boards: [], // Empty boards array for now, can be updated later
+        photo: photo
       };
-      // Use setDoc to create/update the document in Firestore
+
       await setDoc(userRef, userData);
       console.log("User document created with UID:", uid);
     } catch (err) {
@@ -54,14 +60,16 @@ export const FirebaseProvider = ({ children }) => {
   };
 
   // Sign up function
-  const signUp = async (email, password) => {
+  const signUp = async (name, email, password) => {
     try {
       setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const newUser = userCredential.user;
+      newUser.name = name;
+      newUser.photo = "https://avatar.iran.liara.run/public/16"
 
       // Add the new user to Firestore using the UID
-      await addUserToFirestore(newUser.uid, email);
+      await addUserToFirestore(newUser.uid, email, name);
       setUser(newUser);
       setError(null);
       return newUser;
@@ -79,7 +87,9 @@ export const FirebaseProvider = ({ children }) => {
     try {
       setLoading(true);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      setUser(userCredential.user);
+      const newUser = userCredential.user;
+      setUser(newUser);
+      await addUserToFirestore(newUser.uid, email);
       setError(null);
       return userCredential.user;
     } catch (error) {
@@ -110,7 +120,10 @@ export const FirebaseProvider = ({ children }) => {
       setLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      console.log(user)
       setUser(user);
+      // Check if the user exists in Firestore and add them if not
+      await addUserToFirestore(user.uid, user.email, user.displayName, user.photoURL || "https://avatar.iran.liara.run/public/16");
       setError(null);
       return user;
     } catch (error) {

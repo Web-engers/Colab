@@ -164,6 +164,9 @@ const SideOptions = () => {
 
     return (
         <div className='flex flex-col gap-5 bg-white  p-2 m-3 py-4 rounded-lg shadow-lg mt-20'>
+            <button onClick={() => openAI()}>
+                GPT
+            </button>
             <button onClick={() => handleClick("Templates")}>
                 <TbTemplate size={28} />
             </button>

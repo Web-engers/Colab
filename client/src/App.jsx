@@ -7,6 +7,7 @@ import SignUpPage from './pages/Signup';
 import Create from './pages/Create';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import RedirectIfAuthenticated from './components/RedirectIfAuthenticated';
+import ShareCanvas from './components/ShareCanvas';
 
 const App = () => {
   const { loading } = useFirebase();
@@ -48,6 +49,14 @@ const App = () => {
             <ProtectedRoutes>
               <Create />
             </ProtectedRoutes>
+          }
+        />
+        <Route
+          path='/test'
+          element={
+    
+              <ShareCanvas />
+            
           }
         />
       </Routes>
