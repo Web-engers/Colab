@@ -33,7 +33,7 @@ const Topbar = () => {
   };
 
   return (
-    <div className="bg-white flex gap-3 shadow-2xl w-1/4 h-[48px] rounded-lg m-3 justify-center items-center px-4">
+    <div className="bg-white flex gap-3 shadow-2xl w-2/6 h-[48px] rounded-lg m-3 justify-center items-center px-4">
       <div className="font-semibold text-3xl">colab</div>
 
       <div style={{ borderLeft: "1px solid #000", height: "80%" }}></div>
@@ -50,6 +50,7 @@ const Topbar = () => {
         <span>Export</span>
         <CiExport size={20} />
       </button>
+      <p className='text-slate-600'>Saved</p>
     </div>
   );
 };

@@ -9,12 +9,10 @@ const Home = () => {
   const { currentUser, signOut, loading } = useFirebase(); // Added loading state from context
   const navigate = useNavigate();
 
-  const [userLoading, setUserLoading] = useState(true);
 
   useEffect(() => {
     if (currentUser) {
       console.log(currentUser);
-      setUserLoading(false); // Set loading to false once user is available
     }
   }, [currentUser]);
 
@@ -35,7 +33,7 @@ const Home = () => {
     }
   };
 
-  if (userLoading || loading) {
+  if (loading) {
     return <div>Loading...</div>; // Show loading state while user data is being fetched
   }
 
