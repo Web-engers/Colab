@@ -4,27 +4,54 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Signin from './pages/Signin';
 import Home from './pages/Home';
 import SignUpPage from './pages/Signup';
-import Create from './pages/Create.jsx';
+import Create from './pages/Create';
+import ProtectedRoutes from './components/ProtectedRoutes';
+import RedirectIfAuthenticated from './components/RedirectIfAuthenticated';
 
 const App = () => {
-  const { currentUser, loading } = useFirebase();
+  const { loading } = useFirebase();
 
   if (loading) {
     return <div>Loading...</div>; 
   }
 
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path='/signin' element={currentUser ? <Home/> : <Signin/>}/>
-    //     <Route path='/signup' element={currentUser ? <Home/> : <SignUpPage/>}/>
-    //     <Route path='/' element={currentUser ? <Home/> : <Signin/>}/>
-    //     {/* <Route path='/create' element={currentUser ? <Create/> : <Signin/>}/> */}
-    //   </Routes>
-    // </BrowserRouter>
-      <div>
-        <Create/>
-      </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path='/signin'
+          element={
+            <RedirectIfAuthenticated>
+              <Signin />
+            </RedirectIfAuthenticated>
+          }
+        />
+        <Route
+          path='/signup'
+          element={
+            <RedirectIfAuthenticated>
+              <SignUpPage />
+            </RedirectIfAuthenticated>
+          }
+        />
+        <Route
+          path='/'
+          element={
+            <ProtectedRoutes>
+              <Home />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path='/create/:id'
+          element={
+            <ProtectedRoutes>
+              <Create />
+            </ProtectedRoutes>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
