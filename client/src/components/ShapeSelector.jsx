@@ -3,11 +3,9 @@ import { FaSquare, FaRegSquare, FaCircle, FaRegCircle, FaStar, FaArrowRight, FaA
 import { useCanvas } from '../context/CanvasContext';
 import * as fabric from 'fabric';
 
-
 const ShapeSelector = () => {
   const [selectedShape, setSelectedShape] = useState(null);
   const { canvas } = useCanvas(); // Get canvas instance from context
-  const [points, setPoints] = useState([])
 
   const shapes = [
     { id: 'square', icon: <FaRegSquare /> },

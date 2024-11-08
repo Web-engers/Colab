@@ -1,4 +1,3 @@
-import React from 'react'
 import React, { useEffect, useState } from 'react';
 import { useFirebase } from '../context/Firebase';
 import { doc, setDoc } from "firebase/firestore"; 

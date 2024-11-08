@@ -6,7 +6,8 @@ import ShapeSelector from '../components/ShapeSelector';
 import Canvas from '../components/Canvas';
 import Cursor from '../components/Cursor';
 import { LiveCursors } from '../components/LiveCursor';
-import { useStorage, useMutation } from '@liveblocks/react';
+import ChatSidebar from '../components/ChatSideBar';
+
 const Create = () => {
   const cursors = LiveCursors();
   const COLORS_PRESENCE = [
@@ -17,18 +18,10 @@ const Create = () => {
       '128, 0, 128',    // Purple
       '255, 192, 203',  // Pink
     ];
-    const canvasObject = useStorage((root)=>root.canvasObject);
-    const syncShapeInStorage = useMutation(({storage},object)=>{
-        if(!object) return;
-        const {objectId} = object;
-        const shapeData = object.toJSON();
-        shapeData.objectId = objectId;
-        const canvasObject = storage.get('canvasObject')
-        canvasObject.set
-    },[])
   return (
     <div className="flex flex-col h-screen w-screen" style={{ backgroundColor: "#F2F2F2" }}>
       <Topbar />
+      <ChatSidebar/>
       <div className='flex flex-row justify-between'>
         <CanvasProvider>
           <Sideoptions />

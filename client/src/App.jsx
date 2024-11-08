@@ -7,7 +7,7 @@ import SignUpPage from './pages/Signup';
 import Create from './pages/Create';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import RedirectIfAuthenticated from './components/RedirectIfAuthenticated';
-
+import Chat from './components/Chat';
 const App = () => {
   const { loading } = useFirebase();
 
