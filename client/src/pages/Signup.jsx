@@ -25,19 +25,19 @@ const theme = createTheme({
 const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { user, signup, signinWithGoogle } = useFirebase();
+  const { currentUser, signUp, signinWithGoogle } = useFirebase();
   const navigate = useNavigate();
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    signup(email, password); // Assumes a `signUp` function is defined in `FirebaseContext`
+    signUp(email, password); // Assumes a `signUp` function is defined in `FirebaseContext`
   };
 
   React.useEffect(() => {
-    if (user) {
-      navigate('/dashboard'); // Redirects to dashboard after successful signup
+    if (currentUser) {
+      navigate('/'); // Redirects to dashboard after successful signup
     }
-  }, [user, navigate]);
+  }, [currentUser, navigate]);
 
   return (
     <ThemeProvider theme={theme}>

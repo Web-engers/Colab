@@ -25,7 +25,7 @@ const theme = createTheme({
 const SignInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { user, signIn, signinWithGoogle } = useFirebase();
+  const { currentUser, signIn, signinWithGoogle } = useFirebase();
   const navigate = useNavigate();
 
   const handleSignIn = (e) => {
@@ -34,10 +34,10 @@ const SignInPage = () => {
   };
 
   React.useEffect(() => {
-    if (user) {
-      navigate('/dashboard'); // Redirects to dashboard after successful login
+    if (currentUser) {
+      navigate('/'); 
     }
-  }, [user, navigate]);
+  }, [currentUser, navigate]);
 
   return (
     <ThemeProvider theme={theme}>

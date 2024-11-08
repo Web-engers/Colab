@@ -1,13 +1,11 @@
-import React, { useContext } from 'react'
-import { useFirebase } from '../context/Firebase'
-import SignInPage from '../pages/Signin'
+import React, { useContext } from 'react';
+import { useFirebase } from '../context/Firebase';
+import SignInPage from '../pages/Signin';
 
+const ProtectedRoutes = ({ children }) => {
+  const { currentUser } = useFirebase();
 
-const ProtectedRoutes = ({children}) => {
-    const firebase = useFirebase()
-  return (
-    firebase.user != null ? {children} : <SignInPage/>
-  )
-}
+  return currentUser !== null ? children : <SignInPage />;
+};
 
-export default ProtectedRoutes
+export default ProtectedRoutes;

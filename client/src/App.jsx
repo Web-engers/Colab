@@ -5,9 +5,11 @@ import Signin from './pages/Signin';
 import Home from './pages/Home';
 import SignUpPage from './pages/Signup';
 import Create from './pages/Create';
+import ProtectedRoutes from './components/ProtectedRoutes';
+import RedirectIfAuthenticated from './components/RedirectIfAuthenticated';
 
 const App = () => {
-  const { currentUser, loading } = useFirebase();
+  const { loading } = useFirebase();
 
   if (loading) {
     return <div>Loading...</div>; 
@@ -16,10 +18,38 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/signin' element={currentUser ? <Home/> : <Signin/>}/>
-        <Route path='/signup' element={currentUser ? <Home/> : <SignUpPage/>}/>
-        <Route path='/' element={currentUser ? <Home/> : <Signin/>}/>
-        <Route path='/create' element={currentUser ? <Create/> : <Signin/>}/>
+        <Route
+          path='/signin'
+          element={
+            <RedirectIfAuthenticated>
+              <Signin />
+            </RedirectIfAuthenticated>
+          }
+        />
+        <Route
+          path='/signup'
+          element={
+            <RedirectIfAuthenticated>
+              <SignUpPage />
+            </RedirectIfAuthenticated>
+          }
+        />
+        <Route
+          path='/'
+          element={
+            <ProtectedRoutes>
+              <Home />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path='/create/:id'
+          element={
+            <ProtectedRoutes>
+              <Create />
+            </ProtectedRoutes>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
