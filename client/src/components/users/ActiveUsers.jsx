@@ -6,10 +6,10 @@ import { db } from "../../firebase/config";
 import { useParams } from "react-router-dom";
 
 const ActiveUsers = () => {
-  const [allUsers, setAllUsers] = useState([])
+  const [allUsers, setAllUsers] = useState([]);
   const currentUser = useSelf();
   const others = useOthers();
-  const params = useParams()
+  const params = useParams();
 
   useEffect(() => {
     const boardID = params.id;
@@ -20,9 +20,8 @@ const ActiveUsers = () => {
         const querySnapshot = await getDocs(q);
         const userDocs = querySnapshot.docs;
         
-        const arr = userDocs.map((user) => user.data().name); 
+        const arr = userDocs.map((user) => user.data().name);
         setAllUsers(arr);
-        console.log(allUsers)
       } catch (error) {
         console.error("Error fetching users: ", error);
       }
@@ -33,31 +32,41 @@ const ActiveUsers = () => {
     }
   }, [params.id]);
 
+  // Memoize the avatar index for the current user to ensure consistency
+  const currentUserAvatarIndex = useMemo(() => {
+    return currentUser?.name ? currentUser.name.length % 30 : Math.floor(Math.random() * 30);
+  }, [currentUser?.name]);
+
   const memoizedUsers = useMemo(() => {
     const hasMoreUsers = others.length > 2;
 
     return (
-      <div className='flex items-center justify-center gap-1'>
+      <div className="flex items-center justify-center gap-1">
         {currentUser && (
-          <Avatar name={currentUser.name} otherStyles='border-[3px] border-primary-green' />
+          <Avatar
+            name={currentUser.name}
+            avatarIndex={currentUserAvatarIndex}
+            otherStyles="border-[3px] border-primary-green"
+          />
         )}
 
-        {allUsers.map(({ key, user }) => (
+        {allUsers.map((user, index) => (
           <Avatar
-            key={key}
-            name={`User ${user}`} // Use their unique connection ID for differentiation
-            otherStyles='-ml-3'
+            key={user || index}
+            name={user}
+            avatarIndex={user.length % 30} // Ensure consistent avatar index for each user
+            otherStyles="-ml-3"
           />
         ))}
 
         {hasMoreUsers && (
-          <div className='z-10 -ml-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary-black'>
-            +{allUsers.length - 2}
+          <div className="z-10 -ml-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary-black">
+            +{others.length - 2}
           </div>
         )}
       </div>
     );
-  }, [others.length]);
+  }, [allUsers, currentUser, others, currentUserAvatarIndex]);
 
   return memoizedUsers;
 };

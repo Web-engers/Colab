@@ -39,7 +39,7 @@ const CreateNew = () => {
 
   return (
     <button
-      className="h-[200px] w-[150px] rounded-lg bg-slate-200 text-base flex flex-col items-center justify-center overflow-hidden"
+      className="h-[200px] w-[150px] rounded-lg bg-blue-500 text-base flex flex-col items-center justify-center overflow-hidden"
       onClick={handleCreateNew}
     >
       <p className="font-medium">+</p>

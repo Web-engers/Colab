@@ -22,6 +22,7 @@ const Create = () => {
   return (
     <div className="flex flex-col h-screen w-screen" style={{ backgroundColor: "#F2F2F2" }}>
       <div className='flex justify-between mr-8'>
+        <ChatSidebar/>
         <Topbar />
         <Topbar2/>
       </div>
