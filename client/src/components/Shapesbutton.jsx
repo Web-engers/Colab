@@ -6,7 +6,6 @@ import { useCanvas } from '../context/CanvasContext';
 
 
 export const Shapesbutton = () => {
-    const canvas = useCanvas()
     const [anchorEl, setAnchorEl] = useState(null);
   
     const handleShareClick = (event) => {

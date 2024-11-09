@@ -45,7 +45,7 @@ function Settings() {
 
       canvas.on("object:scaling", (event) => {
         handleObjectSelection(event.target);
-        //saveCanvasStateToFirebase()
+        saveCanvasStateToFirebase()
       });
     }
   }, [canvas]);

@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as fabric from 'fabric';
-import { useCanvas } from '../context/CanvasContext';
+import { useCanvas } from '../context/CanvasContext'; // Import the context
 import { useParams } from "react-router-dom";
-import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { jsPDF } from 'jspdf';  // Import jsPDF for PDF export
+
+
 
 const Canvas = ({ width = 400, height = 400 }) => {
     const params = useParams();
     const canvasEl = useRef(null);
-    const { canvas, setCanvas } = useCanvas(null);
+    const { canvas, setCanvas } = useCanvas();
     const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         if (!canvasEl.current) {
@@ -22,37 +26,43 @@ const Canvas = ({ width = 400, height = 400 }) => {
             height,
         });
 
-        fabricCanvas.backgroundColor = '#fff'
-        fabricCanvas.renderAll()
+        fabricCanvas.backgroundColor = '#fff';
+        fabricCanvas.renderAll();
+
+        setCanvas(fabricCanvas); // Set canvas state to context
 
         const boardRef = doc(db, 'boards', params.id);
-
-        // getDoc(doc(db, "boards", params.id)).then(boardSnap => {
-        //     if (boardSnap.exists()) {
-        //         console.log("Document data:", boardSnap.data());
-        //         const currCanvasData = boardSnap.data()?.canvas;
+        // Uncomment and use the snapshot to load the canvas data
+        // onSnapshot(boardRef, (snapshot) => {
+        //     if (snapshot.exists()) {
+        //         const boardData = snapshot.data();
+        //         const currCanvasData = boardData?.canvas;
         //         fabricCanvas.loadFromJSON(currCanvasData, fabricCanvas.renderAll.bind(fabricCanvas));
-        //         fabricCanvas.backgroundColor = "white"
-        //         console.log("Canvas loaded from Firestore");
+        //         fabricCanvas.backgroundColor = "white";
+        //         setLoading(false);
         //     } else {
         //         console.log("No such document!");
         //     }
-        //     })
-
-        setCanvas(fabricCanvas);
-
+        // });
 
         return () => {
             fabricCanvas.dispose();
         };
+    }, [params.id, width, height]);
 
-    }, [params.id, width, height]); 
+    useEffect(() => {
+        if (canvas) {
+            console.log("Canvas is ready for export!", canvas);
+        }
+    }, [canvas]); // This will run whenever canvas is updated
+
+  
 
     return (
         <div>
-            <canvas ref={canvasEl}/>
+            <canvas ref={canvasEl} />
         </div>
     );
 };
 
-export default Canvas;
+export default Canvas

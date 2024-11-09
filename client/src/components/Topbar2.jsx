@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Popover from '@mui/material/Popover';
 import AddUser from './AddUser';
 import ShareCanvas from './ShareCanvas';
+import Export from './Export';
 
 const Topbar2 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -17,16 +18,13 @@ const Topbar2 = () => {
     setAnchorEl(null);
   };
 
+
   const open = Boolean(anchorEl);
 
   return (
     <div className="bg-white flex gap-3 shadow-lg w-1/6 h-[48px] rounded-lg m-3 justify-center items-center px-4">
       {/* Export Button */}
-      <button className="flex items-center gap-1 px-3 py-2 rounded-md hover:bg-blue-300 transition duration-200">
-        <span className="font-semibold">Export</span>
-        <CiExport size={20} />
-      </button>
-
+      <Export/>
       {/* Divider */}
       <div style={{ borderLeft: "1px solid #ddd", height: "80%" }}></div>
 
