@@ -23,6 +23,7 @@ const theme = createTheme({
 });
 
 const SignUpPage = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { currentUser, signUp, signinWithGoogle } = useFirebase();
@@ -30,7 +31,7 @@ const SignUpPage = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    signUp(email, password); // Assumes a `signUp` function is defined in `FirebaseContext`
+    signUp(name, email, password); // Pass name, email, and password to the signUp function
   };
 
   React.useEffect(() => {
@@ -73,11 +74,21 @@ const SignUpPage = () => {
               margin="normal"
               required
               fullWidth
+              id="name"
+              label="Full Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
               id="email"
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField

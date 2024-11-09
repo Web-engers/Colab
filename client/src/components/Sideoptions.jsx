@@ -4,16 +4,16 @@ import { FaRegImage, FaShapes } from "react-icons/fa";
 import { MdOutlineDraw } from "react-icons/md";
 import { useCanvas } from '../context/CanvasContext';
 import * as fabric from "fabric";
-import { getStroke } from 'perfect-freehand';
+import { getStroke } from 'perfect-freehand'; // Import perfect-freehand for smooth strokes
 
 const SideOptions = () => {
     const [activeOption, setActiveOption] = useState(null);
-    const [isDrawing, setIsDrawing] = useState(false);
-    const [points, setPoints] = useState([]);
-    const { canvas } = useCanvas();
-    const drawingPathRef = useRef(null);
+    const [isDrawing, setIsDrawing] = useState(false); // State to track custom drawing mode
+    const [points, setPoints] = useState([]); // Track points for stroke paths
+    const { canvas } = useCanvas(); // Access canvas instance from context
+    const drawingPathRef = useRef(null); // Reference to current drawing path
 
-    // Drawing event listeners
+    // Add mouse event listeners for drawing when custom drawing mode is enabled
     useEffect(() => {
         if (!canvas) return;
 
@@ -145,15 +145,8 @@ const SideOptions = () => {
         });
     };
 
-    const openAI = () => {
-        console.log("openAI function triggered!");
-    };
-
     return (
-        <div className='flex flex-col gap-5 bg-white p-2 m-3 py-4 rounded-lg shadow-lg mt-20'>
-            <button onClick={openAI}>
-                GPT
-            </button>
+        <div className='flex flex-col gap-5 bg-white  p-2 m-3 py-4 rounded-lg shadow-lg mt-20'>
             <button onClick={() => handleClick("Templates")}>
                 <TbTemplate size={28} />
             </button>

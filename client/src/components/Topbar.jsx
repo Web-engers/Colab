@@ -7,10 +7,12 @@ import { db } from '../firebase/config';
 import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 import ActiveUsers from "./users/ActiveUsers.jsx"
+import { useNavigate } from 'react-router-dom';
 
 const Topbar = () => {
   const params = useParams();
   const [title, setTitle] = useState('Untitled'); 
+  const navigate = useNavigate()
 
   useEffect(() => {
     const boardRef = doc(db, 'boards', params.id);
@@ -35,7 +37,7 @@ const Topbar = () => {
 
   return (
     <div className="bg-white flex gap-3 shadow-2xl w-2/6 h-[48px] rounded-lg m-3 justify-center items-center px-4">
-      <div className="font-semibold text-3xl">colab</div>
+      <div className="font-semibold text-3xl" onClick={()=>{navigate('/')}}>colab</div>
 
       <div style={{ borderLeft: "1px solid #000", height: "80%" }}></div>
       
@@ -47,10 +49,6 @@ const Topbar = () => {
         />
       </div>
       <div style={{ borderLeft: "1px solid #000", height: "80%" }}></div>
-      <button className="flex items-center gap-1">
-        <span>Export</span>
-        <CiExport size={20} />
-      </button>
       <p className='text-slate-600'>Saved</p>
       <ActiveUsers/>
     </div>

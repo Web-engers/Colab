@@ -8,6 +8,9 @@ import Create from './pages/Create';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import RedirectIfAuthenticated from './components/RedirectIfAuthenticated';
 import Chat from './components/Chat';
+import ShareCanvas from './components/ShareCanvas';
+import CreateWithAI from './components/CreateWithAI';
+
 const App = () => {
   const { loading } = useFirebase();
 
@@ -48,6 +51,14 @@ const App = () => {
             <ProtectedRoutes>
               <Create />
             </ProtectedRoutes>
+          }
+        />
+        <Route
+          path='/test'
+          element={
+    
+              <CreateWithAI />
+            
           }
         />
       </Routes>

@@ -1,49 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { useFirebase } from '../context/Firebase';
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import Navbar from '../components/Navbar';
+import BoardCard from '../components/BoardCard';
+import CreateNew from '../components/CreateNew';
 
 const Home = () => {
-  const { currentUser, signOut, loading } = useFirebase(); // Added loading state from context
-  const navigate = useNavigate();
-
+  const { currentUser, loading } = useFirebase();
+  const [allBoards, setAllBoards] = useState([]);
 
   useEffect(() => {
-    if (currentUser) {
-      console.log(currentUser);
-    }
+    const fetchUserBoards = async () => {
+      if (!currentUser) return;
+
+      try {
+        const userRef = doc(db, 'users', currentUser.uid);
+        const userSnap = await getDoc(userRef);
+        
+        if (userSnap.exists()) {
+          setAllBoards(userSnap.data().boards || []);
+        } else {
+          console.log('No document found');
+        }
+      } catch (error) {
+        console.error('Error fetching document:', error);
+      }
+    };
+  
+    fetchUserBoards();
   }, [currentUser]);
 
-  const handleCreateNew = async () => {
-    try {
-      const boardID = uuidv4();
-      const docRef = doc(db, "boards", boardID);
-      const docData = {
-        admin: currentUser.uid,
-        collaborators: [],
-        canvas: null
-      };
-      await setDoc(docRef, docData);
-      console.log("New board created in db");
-      navigate(`/create/${boardID}`);
-    } catch (error) {
-      console.error('Error adding document:', error);
-    }
-  };
-
   if (loading) {
-    return <div>Loading...</div>; // Show loading state while user data is being fetched
+    return <div>Loading...</div>;
   }
-    return (<div className='flex-col'>
-      <div>Home</div>
+
+  return (
+    <div className="flex-col">
       {currentUser ? (
-        <>
-          <div>{currentUser.email}</div>
-          <button onClick={signOut}>Sign Out</button>
-          <button onClick={handleCreateNew}>Create New</button>
-        </>
+        <div>
+          <Navbar />
+          <div className='grid grid-cols-8 gap-2 m-3'>
+            <CreateNew />
+            {allBoards.map((boardID) => (
+              <BoardCard key={boardID} boardID={boardID} />
+            ))}
+          </div>
+        </div>
       ) : (
         <div>Loading user...</div>
       )}

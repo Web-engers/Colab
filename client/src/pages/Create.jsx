@@ -7,6 +7,7 @@ import Canvas from '../components/Canvas';
 import Cursor from '../components/Cursor';
 import { LiveCursors } from '../components/LiveCursor';
 import ChatSidebar from '../components/ChatSideBar';
+import Topbar2 from '../components/Topbar2';
 
 const Create = () => {
   const cursors = LiveCursors();
@@ -20,8 +21,10 @@ const Create = () => {
     ];
   return (
     <div className="flex flex-col h-screen w-screen" style={{ backgroundColor: "#F2F2F2" }}>
-      <Topbar />
-      <ChatSidebar/>
+      <div className='flex justify-between mr-8'>
+        <Topbar />
+        <Topbar2/>
+      </div>
       <div className='flex flex-row justify-between'>
         <CanvasProvider>
           <Sideoptions />

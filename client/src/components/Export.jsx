@@ -1,41 +1,21 @@
-const exportToPDF = () => {
-    if (canvas) {
-        const imgData = canvas.toDataURL({
-            format: 'jpeg',
-            quality: 0.5,
-        });
-        const doc = new jsPDF();
-        doc.addImage(imgData, 'JPEG', 0, 0, 210, 297); // A4 size in mm
-        doc.save("canvas-export.pdf");
-    }
-};
+import React from 'react'
 
-const CanvasControls = () => {
-    const { addRectangle, exportToPDF } = useCanvas();
+const Export = () => {
+    const exportToPDF = () => {
+        if (canvas) {
+            const imgData = canvas.toDataURL({
+                format: 'jpeg',
+                quality: 0.5,
+            });
+            const doc = new jsPDF();
+            doc.addImage(imgData, 'JPEG', 0, 0, 210, 297); // A4 size in mm
+            doc.save("canvas-export.pdf");
+        }
+    };
 
     return (
-        <div>
-            <button onClick={addRectangle}>Add Rectangle</button>
-            <button onClick={exportToPDF}>Export as PDF</button>
-        </div>
-    );
-};
+        <button className='bg-blue-200 rounded-lg p-2' onClick={exportToPDF}>Export</button>
+    )
+}
 
-  // const addRectangle = () => {
-    //     if (canvas) {
-    //         const rect = new fabric.Rect({
-    //             left: 100,
-    //             top: 100,
-    //             fill: 'white',
-    //             width: 50,
-    //             height: 50,
-    //             stroke: 'black',
-    //             strokeWidth: 1,
-    //             angle: 0,
-    //         });
-    //         canvas.add(rect);
-    //         canvas.renderAll();
-    //     }
-    // };
-
-    // addRectangle()
+export default Export
