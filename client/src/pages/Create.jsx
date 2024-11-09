@@ -21,7 +21,7 @@ const Create = ({height=1200, width=800}) => {
       '255, 192, 203',  // Pink
     ];
   return (
-    <div className="flex flex-col h-screen w-screen" style={{ backgroundColor: "#F2F2F2" }}>
+    <div className="flex flex-col w-screen overflow-scroll" style={{ backgroundColor: "#F2F2F2", height:height }}>
       <div>
         <div className='flex mr-8 justify-between'>
           <Topbar />

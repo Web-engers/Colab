@@ -4,4 +4,6 @@ export const ACTIONS = {
     CIRCLE: "CIRCLE",
     SCRIBBLE: "SCRIBBLE",
     ARROW: "ARROW",
+    IMAGE:"IMAGE",
+    TEXT:"TEXT"
   };

@@ -6,6 +6,10 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { LuPencil } from "react-icons/lu";
 import { GiArrowCursor } from "react-icons/gi";
 import { FaRegCircle } from "react-icons/fa6";
+import { IoText } from "react-icons/io5";
+import { CiImageOn } from "react-icons/ci";
+
+
 import {
     Arrow,
     Circle,
@@ -63,6 +67,13 @@ const Controls = ({ action, setAction, fillColor, setFillColor, stageRef }) => {
           <LuPencil size={"1.5rem"} />
         </button>
 
+        <button
+          className={action === ACTIONS.SCRIBBLE ? "bg-violet-300 p-1 rounded" : "p-1 hover:bg-violet-100 rounded"}
+          onClick={() => setAction(ACTIONS.SCRIBBLE)}
+        >
+          <IoText size={"1.5rem"} />
+        </button>
+
         <button>
             <input
             className="w-6 h-6"
@@ -70,10 +81,7 @@ const Controls = ({ action, setAction, fillColor, setFillColor, stageRef }) => {
             value={fillColor}
             onChange={(e) => setFillColor(e.target.value)}
             />
-        </button>
-
-        <button onClick={handleExport}>
-          <IoMdDownload size={"1.5rem"} />
+            <CiImageOn/>
         </button>
       </div>
     </div>

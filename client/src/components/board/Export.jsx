@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import Popover from '@mui/material/Popover';
-import { FaDownload } from "react-icons/fa";  // Optionally, add an icon for download
-import { jsPDF } from "jspdf";  // Import jsPDF for PDF export
+import { LuDownload } from "react-icons/lu";
 
-const Export = () => {
-    
-    const [anchorEl, setAnchorEl] = useState(null);  // Track the anchor element for Popover
-    const [format, setFormat] = useState(null);
+const Export = ({ handleExport }) => {
+    const [anchorEl, setAnchorEl] = useState(null);  
 
     const handleExportClick = (event) => {
         setAnchorEl(event.currentTarget); // Set the current button as the anchor
@@ -16,19 +13,20 @@ const Export = () => {
         setAnchorEl(null);  // Close the Popover when clicked outside
     };
 
-    // Boolean to check if Popover should be open
     const open = Boolean(anchorEl);
     const id = open ? 'export-popover' : undefined;  // ID for accessibility
 
-    // Function to handle exporting on button click
-    const handleExportButtonClick = (ext) => {
-        handleClose();  // Close the popover after export is triggered
+    const handleExportButtonClick = (extension) => {
+        // Handle export logic based on selected extension
+        console.log(`Exporting as ${extension}`);
+        handleExport(extension); // Assuming `handleExport` can handle the file extension argument
+        handleClose();  // Close popover after selection
     };
 
     return (
         <div>
-            <button className='bg-blue-200 rounded-lg p-2 flex' onClick={handleExportClick}>
-                <FaDownload className='mr-2' /> Export
+            <button className="p-2 flex" onClick={handleExportClick}>
+                <LuDownload className='mr-2' size={28} />
             </button>
             <Popover
                 id={id}
@@ -36,14 +34,14 @@ const Export = () => {
                 anchorEl={anchorEl}  // Anchor element is the button
                 onClose={handleClose}  // Close popover when clicked outside
                 anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
+                    vertical: 'center',
+                    horizontal:'center'
                 }}
                 transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: 'center',
+                    horizontal: 'center',
                 }}
-                className='ml-[20px] mt-[40px]'
+                className='ml-[50px] mt-[40px]'
             >
                 <div className='p-4'>
                     <ul className="space-y-2">
@@ -54,7 +52,7 @@ const Export = () => {
                                         className="text-black py-2 rounded-lg w-full hover:bg-blue-300 focus:outline-none"
                                         onClick={() => handleExportButtonClick(ext)}  // Trigger export on button click
                                     >
-                                        Export as {ext.toUpperCase()}
+                                        {ext.toUpperCase()}
                                     </button>
                                 </li>
                                 <hr className="border-t-2 border-black opacity-50 hover:opacity-100 transition-all duration-300" />

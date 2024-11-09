@@ -22,13 +22,8 @@ const Topbar2 = () => {
   const open = Boolean(anchorEl);
 
   return (
-    <div className="bg-white flex gap-3 shadow-lg w-1/6 h-[48px] rounded-lg m-3 justify-center items-center px-4">
-      {/* Export Button */}
-      <Export/>
-      {/* Divider */}
-      <div style={{ borderLeft: "1px solid #ddd", height: "80%" }}></div>
+    <div className="bg-white flex gap-3 shadow-lg w-[100px] h-[48px] rounded-lg m-3 justify-center items-center px-4">
 
-      {/* Share Button */}
       <button className="flex items-center gap-1 px-3 py-2 rounded-md hover:bg-blue-300 transition duration-200" onClick={handleShareClick}>
         <span className="font-semibold">Share</span>
         <FaShareAlt size={20} />
