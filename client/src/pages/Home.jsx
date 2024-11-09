@@ -3,9 +3,9 @@ import { useFirebase } from '../context/Firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import BoardCard from '../components/BoardCard';
-import CreateNew from '../components/CreateNewBoard';
+import Navbar from '../components/home/Navbar';
+import BoardCard from '../components/home/BoardCard';
+import CreateNew from '../components/home/CreateNewBoard';
 
 const Home = () => {
   const { currentUser, loading } = useFirebase();

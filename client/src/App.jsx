@@ -7,9 +7,11 @@ import SignUpPage from './pages/Signup';
 import Create from './pages/Create';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import RedirectIfAuthenticated from './components/RedirectIfAuthenticated';
-import ShareCanvas from './components/ShareCanvas';
-import CreateWithAI from './components/CreateWithAI';
+import Chat from './components/chats/Chat';
+import ShareCanvas from './components/board/ShareBoard';
+import CreateWithAI from './components/board/CreateWithAI';
 import Imageselect from './components/Imageselect';
+import Canvas from './components/Konva';
 
 const App = () => {
   const { loading } = useFirebase();
@@ -56,9 +58,7 @@ const App = () => {
         <Route
           path='/test'
           element={
-    
-              <Imageselect />
-            
+              <Canvas />
           }
         />
       </Routes>

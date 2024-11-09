@@ -1,0 +1,52 @@
+import React, { useState } from 'react';
+import Popover from '@mui/material/Popover';
+import ShapeSelector from './ShapeSelector';
+import {  FaShapes } from "react-icons/fa";
+
+
+export const Shapesbutton = () => {
+    const [anchorEl, setAnchorEl] = useState(null);
+  
+    const handleShareClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+  
+    const open = Boolean(anchorEl); // Determine if the popover should be open
+    const id = open ? 'ai-popover' : undefined;
+  
+    return (
+      <div>
+        <button
+          className="transition duration-200"
+          onClick={handleShareClick}
+        >
+            <FaShapes size={28} />
+        </button>
+  
+        {/* Popover */}
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical:'bottom',
+            horizontal:'right'
+          }}
+          transformOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          className='ml-[20px] mt-[40px]'
+        >
+          <div><ShapeSelector/></div>
+        </Popover>
+      </div>
+    );
+  };
+
+  
