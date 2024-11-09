@@ -5,6 +5,7 @@ import CanvasProvider from '../context/CanvasContext'; // Ensure this import mat
 import ShapeSelector from '../components/ShapeSelector';
 import Canvas from '../components/Canvas';
 import Topbar2 from '../components/Topbar2';
+import Settings from '../components/Settings';
 
 const Create = () => {
   return (
@@ -13,11 +14,11 @@ const Create = () => {
         <Topbar />
         <Topbar2/>
       </div>
-      <div className='flex flex-row justify-between'>
+      <div className='flex flex-row gap-36 justify-items-start'>
         <CanvasProvider>
           <Sideoptions />
           <Canvas/>
-          <ShapeSelector/>
+          <Settings/>
         </CanvasProvider>
       </div>
     </div>

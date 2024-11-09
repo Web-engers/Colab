@@ -6,6 +6,8 @@ import { useCanvas } from '../context/CanvasContext'; // Custom hook for accessi
 import * as fabric from "fabric";
 import { getStroke } from 'perfect-freehand'; // Import perfect-freehand for smooth strokes
 import { Aibutton } from './CreateWithAI';
+import { Shapesbutton } from './ShapesButton';
+import { Imagebutton } from './ImageButton';
 
 const SideOptions = () => {
     const [activeOption, setActiveOption] = useState(null);
@@ -162,8 +164,6 @@ const SideOptions = () => {
         });
     };
 
-
-
     return (
         <div className='mt-20'>
             <Aibutton/>
@@ -171,15 +171,11 @@ const SideOptions = () => {
                 <button onClick={() => handleClick("Templates")}>
                     <TbTemplate size={28} />
                 </button>
-                <button onClick={() => handleClick("Image")}>
-                    <FaRegImage size={28} />
-                </button>
+                <Imagebutton/>
                 <button onClick={() => handleClick("Text")}>
                     <TbTextSize size={28} />
                 </button>
-                <button onClick={() => handleClick("Shapes")}>
-                    <FaShapes size={28} />
-                </button>
+                <Shapesbutton/>
                 <button onClick={() => handleClick("Draw")}>
                     <MdOutlineDraw size={28} />
                 </button>
