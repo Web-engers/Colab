@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/config";
 
-export default function Konva() {
+export default function Konva({width = 400, height=400}) {
   const params = useParams();
   const stageRef = useRef();
   const transformerRef = useRef();
@@ -213,9 +213,9 @@ export default function Konva() {
   
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      <div className="absolute top-0 z-10 w-full py-2">
-        <div className="flex justify-center items-center gap-3 py-2 px-3 w-fit mx-auto border shadow-lg rounded-lg">
+    <div className="relative w-full h-screen overflow-hidden flex justify-between">
+      <div className="z-10 bg-white">
+        <div className="flex flex-col justify-center items-center gap-3 py-2 px-3 w-[60px] mx-auto border shadow-lg rounded-lg">
           <button
             className={action === ACTIONS.SELECT ? "bg-violet-300 p-1 rounded" : "p-1 hover:bg-violet-100 rounded"}
             onClick={() => setAction(ACTIONS.SELECT)}
@@ -251,85 +251,86 @@ export default function Konva() {
           </button>
         </div>
       </div>
-
-      <Stage
-        ref={stageRef}
-        width={window.innerWidth}
-        height={window.innerHeight}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-      >
-        <Layer>
-          <Rect
-            x={0}
-            y={0}
-            height={window.innerHeight}
-            width={window.innerWidth}
-            fill="#ffffff"
-            id="bg"
-            onClick={() => {
-              transformerRef.current.nodes([]);
-            }}
-          />
-
-          {rectangles.map((rectangle) => (
+      <div className="w-[1400px] flex justify-center ">
+        <Stage
+          ref={stageRef}
+          width={width}
+          height={height}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+        >
+          <Layer>
             <Rect
-              key={rectangle.id}
-              x={rectangle.x}
-              y={rectangle.y}
-              stroke={strokeColor}
-              strokeWidth={2}
-              fill={rectangle.fillColor}
-              height={rectangle.height}
-              width={rectangle.width}
-              draggable={isDraggable}
-              onClick={onClick}
+              x={0}
+              y={0}
+              height={width}
+              width={height}
+              fill="#ffffff"
+              id="bg"
+              onClick={() => {
+                transformerRef.current.nodes([]);
+              }}
             />
-          ))}
 
-          {circles.map((circle) => (
-            <Circle
-              key={circle.id}
-              radius={circle.radius}
-              x={circle.x}
-              y={circle.y}
-              stroke={strokeColor}
-              strokeWidth={2}
-              fill={circle.fillColor}
-              draggable={isDraggable}
-              onClick={onClick}
-            />
-          ))}
-          {arrows.map((arrow) => (
-            <Arrow
-              key={arrow.id}
-              points={arrow.points}
-              stroke={strokeColor}
-              strokeWidth={2}
-              fill={arrow.fillColor}
-              draggable={isDraggable}
-              onClick={onClick}
-            />
-          ))}
+            {rectangles.map((rectangle) => (
+              <Rect
+                key={rectangle.id}
+                x={rectangle.x}
+                y={rectangle.y}
+                stroke={strokeColor}
+                strokeWidth={2}
+                fill={rectangle.fillColor}
+                height={rectangle.height}
+                width={rectangle.width}
+                draggable={isDraggable}
+                onClick={onClick}
+              />
+            ))}
 
-          {scribbles.map((scribble) => (
-            <Line
-              key={scribble.id}
-              lineCap="round"
-              lineJoin="round"
-              points={scribble.points}
-              stroke={strokeColor}
-              strokeWidth={2}
-              fill={scribble.fillColor}
-              draggable={isDraggable}
-              onClick={onClick}
-            />
-          ))}
+            {circles.map((circle) => (
+              <Circle
+                key={circle.id}
+                radius={circle.radius}
+                x={circle.x}
+                y={circle.y}
+                stroke={strokeColor}
+                strokeWidth={2}
+                fill={circle.fillColor}
+                draggable={isDraggable}
+                onClick={onClick}
+              />
+            ))}
+            {arrows.map((arrow) => (
+              <Arrow
+                key={arrow.id}
+                points={arrow.points}
+                stroke={strokeColor}
+                strokeWidth={2}
+                fill={arrow.fillColor}
+                draggable={isDraggable}
+                onClick={onClick}
+              />
+            ))}
 
-          <Transformer ref={transformerRef} />
-        </Layer>
-      </Stage>
+            {scribbles.map((scribble) => (
+              <Line
+                key={scribble.id}
+                lineCap="round"
+                lineJoin="round"
+                points={scribble.points}
+                stroke={strokeColor}
+                strokeWidth={2}
+                fill={scribble.fillColor}
+                draggable={isDraggable}
+                onClick={onClick}
+              />
+            ))}
+
+            <Transformer ref={transformerRef} />
+          </Layer>
+        </Stage>
+      </div>
     </div>
   );
 }
