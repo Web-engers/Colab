@@ -12,6 +12,8 @@ import ShareCanvas from './components/board/ShareBoard';
 import CreateWithAI from './components/board/CreateWithAI';
 import Imageselect from './components/Imageselect';
 import Canvas from './components/Konva';
+import ImageGallery from './components/ImageGallery';
+import Landing from './pages/Landing';
 
 const App = () => {
   const { loading } = useFirebase();
@@ -29,6 +31,12 @@ const App = () => {
             <RedirectIfAuthenticated>
               <Signin />
             </RedirectIfAuthenticated>
+          }
+        />
+        <Route
+          path='/landing'
+          element={
+              <Landing/>
           }
         />
         <Route
@@ -58,7 +66,7 @@ const App = () => {
         <Route
           path='/test'
           element={
-              <Canvas />
+              <ImageGallery/>
           }
         />
       </Routes>

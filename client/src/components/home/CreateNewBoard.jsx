@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { useFirebase } from '../../context/Firebase';
 
 const CreateNew = () => {
   const navigate = useNavigate();
-  const { currentUser } = useFirebase()
+  const { currentUser } = useFirebase();
 
   const handleCreateNew = async () => {
     if (!currentUser) {
@@ -24,7 +24,6 @@ const CreateNew = () => {
         canvas: null,
       };
       await setDoc(docRef, docData);
-      console.log("New board created in db");
 
       const userRef = doc(db, 'users', currentUser.uid);
       await updateDoc(userRef, {
@@ -39,10 +38,11 @@ const CreateNew = () => {
 
   return (
     <button
-      className="h-[200px] w-[150px] rounded-lg bg-blue-500 text-base flex flex-col items-center justify-center overflow-hidden"
+      className="h-[200px] w-[150px] rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 text-5xl font-semibold text-white flex flex-col items-center justify-center shadow-md hover:shadow-lg transition-shadow duration-200"
       onClick={handleCreateNew}
     >
       <p className="font-medium">+</p>
+      <span className="text-sm text-gray-100 font-light mt-2">Create New Canvas</span>
     </button>
   );
 };

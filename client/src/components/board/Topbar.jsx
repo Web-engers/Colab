@@ -8,7 +8,7 @@ import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 import ActiveUsers from "../liveblocks/ActiveUsers.jsx"
 import { useNavigate } from 'react-router-dom';
-
+import CloudinaryUploadWidget from '../CloudinaryUploadWidget.jsx';
 const Topbar = () => {
   const params = useParams();
   const [title, setTitle] = useState('Untitled'); 
@@ -51,6 +51,7 @@ const Topbar = () => {
       <div style={{ borderLeft: "1px solid #000", height: "80%" }}></div>
       <p className='text-slate-600'>Saved</p>
       <ActiveUsers/>
+      <CloudinaryUploadWidget/>
     </div>
   );
 };
