@@ -8,6 +8,7 @@ import Create from './pages/Create';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import RedirectIfAuthenticated from './components/RedirectIfAuthenticated';
 import ShareCanvas from './components/ShareCanvas';
+import CreateWithAI from './components/CreateWithAI';
 
 const App = () => {
   const { loading } = useFirebase();
@@ -55,7 +56,7 @@ const App = () => {
           path='/test'
           element={
     
-              <ShareCanvas />
+              <CreateWithAI />
             
           }
         />

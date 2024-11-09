@@ -5,6 +5,7 @@ import { MdOutlineDraw } from "react-icons/md";
 import { useCanvas } from '../context/CanvasContext'; // Custom hook for accessing canvas context
 import * as fabric from "fabric";
 import { getStroke } from 'perfect-freehand'; // Import perfect-freehand for smooth strokes
+import { Aibutton } from './CreateWithAI';
 
 const SideOptions = () => {
     const [activeOption, setActiveOption] = useState(null);
@@ -13,7 +14,6 @@ const SideOptions = () => {
     const { canvas } = useCanvas(); // Access canvas instance from context
     const drawingPathRef = useRef(null); // Reference to current drawing path
 
-    // Add mouse event listeners for drawing when custom drawing mode is enabled
     useEffect(() => {
         if (!canvas) return;
 
@@ -162,26 +162,28 @@ const SideOptions = () => {
         });
     };
 
+
+
     return (
-        <div className='flex flex-col gap-5 bg-white  p-2 m-3 py-4 rounded-lg shadow-lg mt-20'>
-            <button onClick={() => openAI()}>
-                GPT
-            </button>
-            <button onClick={() => handleClick("Templates")}>
-                <TbTemplate size={28} />
-            </button>
-            <button onClick={() => handleClick("Image")}>
-                <FaRegImage size={28} />
-            </button>
-            <button onClick={() => handleClick("Text")}>
-                <TbTextSize size={28} />
-            </button>
-            <button onClick={() => handleClick("Shapes")}>
-                <FaShapes size={28} />
-            </button>
-            <button onClick={() => handleClick("Draw")}>
-                <MdOutlineDraw size={28} />
-            </button>
+        <div className='mt-20'>
+            <Aibutton/>
+            <div className='flex flex-col gap-5 bg-white  p-2 m-3 py-4 rounded-lg shadow-lg'>
+                <button onClick={() => handleClick("Templates")}>
+                    <TbTemplate size={28} />
+                </button>
+                <button onClick={() => handleClick("Image")}>
+                    <FaRegImage size={28} />
+                </button>
+                <button onClick={() => handleClick("Text")}>
+                    <TbTextSize size={28} />
+                </button>
+                <button onClick={() => handleClick("Shapes")}>
+                    <FaShapes size={28} />
+                </button>
+                <button onClick={() => handleClick("Draw")}>
+                    <MdOutlineDraw size={28} />
+                </button>
+            </div>
         </div>
     );
 };
