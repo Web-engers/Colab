@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,memo } from 'react';
 import { GrSelect } from "react-icons/gr";
 import { FaUndo } from "react-icons/fa";
 import { FaRedo } from "react-icons/fa";
@@ -6,6 +6,7 @@ import { CiExport } from "react-icons/ci";
 import { db } from '../firebase/config';
 import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
+import ActiveUsers from "./users/ActiveUsers.jsx"
 
 const Topbar = () => {
   const params = useParams();
@@ -51,6 +52,7 @@ const Topbar = () => {
         <CiExport size={20} />
       </button>
       <p className='text-slate-600'>Saved</p>
+      <ActiveUsers/>
     </div>
   );
 };
