@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Drawer, IconButton, Box } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import Chat from './Chat';
+import { MdChat } from "react-icons/md";
+
 
 const ChatSideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +20,7 @@ const ChatSideBar = () => {
         onClick={toggleDrawer(true)}
         className="fixed bottom-5 right-5 bg-blue-500 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg z-50"
       >
-        <ChatIcon fontSize="large" className="fixed bottom-5 right-5" />
+        <MdChat size={40} className="fixed bottom-30 right-5" />
       </IconButton>
 
       {/* Drawer for chat (right side) */}

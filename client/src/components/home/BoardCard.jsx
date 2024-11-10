@@ -29,7 +29,22 @@ const BoardCard = ({ boardID }) => {
         
         if (boardSnap.exists()) {
           setTitle(boardSnap.data().title);
-          setAdmin(boardSnap.data().admin);
+          const adminID = boardSnap.data().admin;
+
+          const adminName = async (adminID) => {
+            const docRef = doc(db, 'users', adminID); 
+            const docSnap = await getDoc(docRef); 
+          
+            if (docSnap.exists()) {
+              return docSnap.data().name; 
+            } else {
+              console.log("No such document!");
+              return null;
+            }
+          };
+
+          const name = await adminName(adminID);  // Use await here to resolve the promise
+          setAdmin(name); // Set the admin name once fetched
         } else {
           console.log('No document found');
         }

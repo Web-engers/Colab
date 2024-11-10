@@ -34,7 +34,7 @@ function CreateWithGemini({setAnchorEl}) {
     if (inputValue.trim()) {
       setLoading(true);
       try {
-        const response = await getGeminiResponse(inputValue); // Pass the inputValue as the prompt
+        const response = await getGeminiResponse(inputValue); 
         setOutputValue(response);
       } catch (error) {
         console.error("Error generating ideas:", error);
@@ -50,7 +50,7 @@ function CreateWithGemini({setAnchorEl}) {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 w-80 space-y-6">
-      {/* Header */}
+      
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-800">Caption your creation</h2>
         <button className="text-gray-400 hover:text-gray-600 transition-colors" onClick={()=>{setAnchorEl(false)}}>
@@ -58,7 +58,7 @@ function CreateWithGemini({setAnchorEl}) {
         </button>
       </div>
 
-      {/* Input Box */}
+      
       <div className="border-2 border-blue-300 rounded-lg p-4 focus-within:border-blue-500">
         <input
           type="text"
@@ -69,12 +69,12 @@ function CreateWithGemini({setAnchorEl}) {
         />
       </div>
 
-      {/* Output Display */}
+      
       <div className="text-gray-600 mt-2">
         {loading ? "Generating..." : outputValue}
       </div>
 
-      {/* Generate Button */}
+
       <button
         onClick={handleGenerate}
         className="w-full bg-blue-500 text-white rounded-lg py-2 flex items-center justify-center hover:bg-blue-600 transition-colors"
@@ -98,7 +98,7 @@ export const Aibutton = () => {
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl); // Determine if the popover should be open
+  const open = Boolean(anchorEl); 
   const id = open ? 'ai-popover' : undefined;
 
   return (
@@ -114,7 +114,7 @@ export const Aibutton = () => {
         />
       </button>
 
-      {/* Popover */}
+      
       <Popover
         id={id}
         open={open}
