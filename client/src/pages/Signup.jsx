@@ -31,12 +31,12 @@ const SignUpPage = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    signUp(name, email, password); // Pass name, email, and password to the signUp function
+    signUp(name, email, password);
   };
 
   React.useEffect(() => {
     if (currentUser) {
-      navigate('/'); // Redirects to dashboard after successful signup
+      navigate('/');
     }
   }, [currentUser, navigate]);
 
@@ -44,113 +44,136 @@ const SignUpPage = () => {
     <ThemeProvider theme={theme}>
       <Container
         component="main"
-        maxWidth="xs"
+        maxWidth="lg"
         sx={{
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: theme.palette.background.default,
+          backgroundColor: '#f9f9f9',
         }}
       >
         <Box
           sx={{
-            padding: 4,
-            borderRadius: 3,
-            boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.1)',
-            backgroundColor: '#FFFFFF',
+            display: 'flex',
             width: '100%',
-            textAlign: 'center',
+            height: '80vh',
+            borderRadius: 2,
+            boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.1)',
+            overflow: 'hidden',
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ fontWeight: '600', mb: 2 }}>
-            Sign Up
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Full Name"
-              name="name"
-              autoComplete="name"
-              autoFocus
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mt: 1 }}>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label={<Typography sx={{ color: theme.palette.text.secondary }}>Remember me</Typography>}
-              />
-            </Box>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 3,
-                mb: 2,
-                py: 1.5,
-                fontWeight: 'bold',
-                fontSize: '1rem',
-                backgroundColor: theme.palette.primary.main,
-                color: '#FFFFFF',
-                '&:hover': {
-                  backgroundColor: theme.palette.primary.dark,
-                },
-              }}
-            >
+          {/* Left Side - Sign Up Form */}
+          <Box
+            sx={{
+              width: '50%',
+              padding: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
+            }}
+          >
+            <Typography component="h1" variant="h5" sx={{ fontWeight: '600', mb: 2 }}>
               Sign Up
-            </Button>
-            <Typography variant="body2" sx={{ textAlign: 'center', color: theme.palette.text.secondary, mt: 1, mb: 1 }}>
-              Already have an account?{' '}
-              <Link href="/signin" sx={{ color: theme.palette.primary.main, fontWeight: '500' }}>
-                Sign in
-              </Link>
             </Typography>
-            <Divider sx={{ my: 2, color: '#ddd' }}>or</Divider>
-            <Button
-              fullWidth
-              variant="outlined"
-              startIcon={<Google />}
-              sx={{
-                py: 1.2,
-                color: '#DB4437', // Google's red color
-                borderColor: '#DB4437',
-                fontWeight: '500',
-                backgroundColor: 'rgba(219, 68, 55, 0.1)',
-                '&:hover': {
+            <Box component="form" noValidate onSubmit={handleSignUp} sx={{ width: '100%', mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Full Name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+                onChange={(e) => setName(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mt: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label={<Typography sx={{ color: theme.palette.text.secondary }}>Remember me</Typography>}
+                />
+              </Box>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  py: 1.5,
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  backgroundColor: theme.palette.primary.main,
+                  color: '#FFFFFF',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                  },
+                }}
+              >
+                Sign Up
+              </Button>
+              <Typography variant="body2" sx={{ textAlign: 'center', color: theme.palette.text.secondary, mt: 1, mb: 1 }}>
+                Already have an account?{' '}
+                <Link href="/signin" sx={{ color: theme.palette.primary.main, fontWeight: '500' }}>
+                  Sign in
+                </Link>
+              </Typography>
+              <Divider sx={{ my: 2, color: '#ddd' }}>or</Divider>
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<Google />}
+                sx={{
+                  py: 1.2,
+                  color: '#DB4437',
                   borderColor: '#DB4437',
-                  backgroundColor: 'rgba(219, 68, 55, 0.2)',
-                },
-              }}
-              onClick={signinWithGoogle}
-            >
-              Sign up with Google
-            </Button>
+                  fontWeight: '500',
+                  backgroundColor: 'rgba(219, 68, 55, 0.1)',
+                  '&:hover': {
+                    borderColor: '#DB4437',
+                    backgroundColor: 'rgba(219, 68, 55, 0.2)',
+                  },
+                }}
+                onClick={signinWithGoogle}
+              >
+                Sign up with Google
+              </Button>
+            </Box>
           </Box>
+
+          {/* Right Side - Image */}
+          <Box
+            sx={{
+              width: '50%',
+              backgroundImage: 'url("/result_download.jpeg")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
         </Box>
       </Container>
     </ThemeProvider>

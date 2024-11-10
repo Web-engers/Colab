@@ -41,29 +41,31 @@ const SignInPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container
-        component="main"
-        maxWidth="xs"
+      <Box
         sx={{
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: theme.palette.background.default,
+          backgroundImage: 'url("/result_download.jpeg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
       >
-        <Box
+        <Container
+          component="main"
+          maxWidth="xs"
           sx={{
             padding: 4,
             borderRadius: 3,
             boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.1)',
-            backgroundColor: '#FFFFFF',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)', // Semi-transparent background for form container
             width: '100%',
             textAlign: 'center',
           }}
         >
           <Box sx={{ mb: 2 }}>
-            <img src="/path/to/logo.png" alt="Logo" style={{ height: '40px' }} />
+            <h1 className='font-extrabold text-indigo-500 text-3xl'>colab</h1>
           </Box>
           <Typography component="h1" variant="h5" sx={{ fontWeight: '600', mb: 2 }}>
             Sign In
@@ -132,7 +134,7 @@ const SignInPage = () => {
               startIcon={<Google />}
               sx={{
                 py: 1.2,
-                color: '#DB4437', // Google's red color
+                color: '#DB4437',
                 borderColor: '#DB4437',
                 fontWeight: '500',
                 backgroundColor: 'rgba(219, 68, 55, 0.1)',
@@ -146,8 +148,8 @@ const SignInPage = () => {
               Sign in with Google
             </Button>
           </Box>
-        </Box>
-      </Container>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 };
