@@ -12,7 +12,7 @@ import ShareCanvas from './components/board/ShareBoard';
 import CreateWithAI from './components/board/CreateWithAI';
 import Imageselect from './components/Imageselect';
 import Canvas from './components/Konva';
-import Template from './components/board/Template';
+import Template from './components/board/TemplateGallery';
 import ImageGallery from './components/ImageGallery';
 
 const App = () => {

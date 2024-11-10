@@ -1,9 +1,9 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase/config'; 
 import { Button } from '@mui/material';
 
-const Template = () => {
+const TemplateGallery = ({setDisplayTemplate}) => {
   const [allTemplates, setAllTemplates] = useState([]); 
 
   useEffect(() => {
@@ -31,6 +31,18 @@ const Template = () => {
 
   const loadTemplate = (templateId) => {
     console.log(`Template ${templateId} clicked`);
+    const tempRef = doc(db, "templates", templateId); 
+    getDoc(tempRef)
+      .then((docSnap) => {
+        if (docSnap.exists()) {
+          setDisplayTemplate(docSnap.data().canvas);  
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch((err) => {
+        console.error("Error loading template:", err);
+      });
   };
 
   const handleAddTemplate = ()=>{
@@ -55,4 +67,4 @@ const Template = () => {
   );
 };
 
-export default Template;
+export default TemplateGallery;

@@ -30,6 +30,7 @@ import { CiImageOn } from "react-icons/ci";
 import Export from "./board/Export";
 import ImageGallery from "./ImageGallery";
 import { Popover } from "@mui/material";
+import TemplateGallery from "./board/TemplateGallery";
 
 export default function Konva({width = 400, height=400}) {
   const params = useParams();
@@ -49,8 +50,7 @@ export default function Konva({width = 400, height=400}) {
   const [selectedShape, setSelectedShape] = useState(null)
   const [selectedNode, setSelectedNode] = useState(null)
   const [showFont, setShowFont] = useState(false)
-
-
+  const [displayTemplate, setDisplayTemplate] = useState(null)
 
   const strokeColor = "#000";
   const isDraggable = action === ACTIONS.SELECT;
@@ -97,7 +97,13 @@ export default function Konva({width = 400, height=400}) {
     return () => unsubscribe(); // Clean up the listener on unmount
   }, [params.id]);
 
-
+  useEffect(()=>{
+    if(!displayTemplate) return;
+    setRectangles(displayTemplate.rectangles || []);
+    setCircles(displayTemplate.circles || []);
+    setArrows(displayTemplate.arrows || []);
+    setScribbles(displayTemplate.scribbles || []);
+  },[displayTemplate])
   
   const saveToFirebase = async () => {
     const shapesData = {
@@ -399,6 +405,7 @@ export default function Konva({width = 400, height=400}) {
   
   const [imgLink, setImgLink] = useState("")
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorTempEl, setAnchorTempEl] = useState(null)
 
   const handleImageClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -408,7 +415,16 @@ export default function Konva({width = 400, height=400}) {
     setAnchorEl(null);
   };
 
+  const handleTemplateClick = (event) => {
+    setAnchorTempEl(event.currentTarget);
+  };
+
+  const handleTempClose = () => {
+    setAnchorTempEl(null);
+  };
+
   const ImageGalleryopen = Boolean(anchorEl); // Determine if the popover should be open
+  const TemplateGalleryopen = Boolean(anchorTempEl)
   const id = open ? 'ai-popover' : undefined;
 
   return (
@@ -456,6 +472,7 @@ export default function Konva({width = 400, height=400}) {
                 <FaFonticonsFi size={"2rem"}/>
               </button>
             </div>
+
             <button
               className={action === ACTIONS.IMAGE ? "bg-violet-300 p-1 rounded" : "p-1 hover:bg-violet-100 rounded"}
               onClick={handleImageClick}
@@ -479,9 +496,28 @@ export default function Konva({width = 400, height=400}) {
               >
                 <div><ImageGallery setAction={setAction} setImgLink={setImgLink}/></div>
             </Popover>
-            <button>
+            
+            <button onClick={handleTemplateClick}>
               <GrTemplate size={"2rem"}/>
             </button>
+            <Popover
+                id={id}
+                open={TemplateGalleryopen}
+                anchorEl={anchorTempEl}
+                onClose={handleTempClose}
+                anchorOrigin={{
+                  vertical:'bottom',
+                  horizontal:'right'
+                }}
+                transformOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                className='mt-[78px] ml-[25px]'
+              >
+                <div><TemplateGallery setDisplayTemplate={setDisplayTemplate}/></div>
+            </Popover>
+
             <button onClick={deleteShape}>
               <MdDeleteOutline size={"2rem"}/>
             </button>
@@ -501,8 +537,8 @@ export default function Konva({width = 400, height=400}) {
             <Rect
               x={0}
               y={0}
-              height={width}
-              width={height}
+              height={height}
+              width={width}
               fill="#ffffff"
               id="bg"
               onClick={() => {
