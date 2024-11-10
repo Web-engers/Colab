@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddUser = ({user}) => {
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null); // State to hold any error messages
+    const [error, setError] = useState(null); 
     const params = useParams();
 
     const handleAddUser = async () => {
