@@ -13,6 +13,7 @@ import CreateWithAI from './components/board/CreateWithAI';
 import Imageselect from './components/Imageselect';
 import Canvas from './components/Konva';
 import Template from './components/board/Template';
+import ImageGallery from './components/ImageGallery';
 
 const App = () => {
   const { loading } = useFirebase();
@@ -59,7 +60,7 @@ const App = () => {
         <Route
           path='/test'
           element={
-              <Template />
+              <ImageGallery/>
           }
         />
       </Routes>

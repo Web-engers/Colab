@@ -9,9 +9,6 @@ import { IoText } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaFonticonsFi } from "react-icons/fa";
 
-
-
-
 import {
   Arrow,
   Circle,
@@ -31,6 +28,8 @@ import { doc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { CiImageOn } from "react-icons/ci";
 import Export from "./board/Export";
+import ImageGallery from "./ImageGallery";
+import { Popover } from "@mui/material";
 
 export default function Konva({width = 400, height=400}) {
   const params = useParams();
@@ -50,6 +49,7 @@ export default function Konva({width = 400, height=400}) {
   const [selectedShape, setSelectedShape] = useState(null)
   const [selectedNode, setSelectedNode] = useState(null)
   const [showFont, setShowFont] = useState(false)
+
 
 
   const strokeColor = "#000";
@@ -155,11 +155,11 @@ export default function Konva({width = 400, height=400}) {
         break;
       case ACTIONS.IMAGE:
           const img = new window.Image();
-          img.src = "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D/";
-          //console.log(img)
+          img.src = imgLink;
+          console.log("from action",img.src)
           setImages((prev) => [
             ...prev,
-            { id, x, y, height: 20, width: 20, img: img }
+            { id, x, y, height: 50, width: 50, img: img }
           ]);
         break;
       case ACTIONS.ARROW:
@@ -397,6 +397,19 @@ export default function Konva({width = 400, height=400}) {
  
   };
   
+  const [imgLink, setImgLink] = useState("")
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleImageClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const ImageGalleryopen = Boolean(anchorEl); // Determine if the popover should be open
+  const id = open ? 'ai-popover' : undefined;
 
   return (
     <div className="h-5/6 relative w-full overflow-hidden flex  justify-between">
@@ -445,10 +458,27 @@ export default function Konva({width = 400, height=400}) {
             </div>
             <button
               className={action === ACTIONS.IMAGE ? "bg-violet-300 p-1 rounded" : "p-1 hover:bg-violet-100 rounded"}
-              onClick={() => setAction(ACTIONS.IMAGE)}
+              onClick={handleImageClick}
             >
               <CiImageOn size={"2rem"} />
             </button>
+            <Popover
+                id={id}
+                open={ImageGalleryopen}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical:'bottom',
+                  horizontal:'right'
+                }}
+                transformOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                className='mt-[78px] ml-[25px]'
+              >
+                <div><ImageGallery setAction={setAction} setImgLink={setImgLink}/></div>
+            </Popover>
             <button>
               <GrTemplate size={"2rem"}/>
             </button>
