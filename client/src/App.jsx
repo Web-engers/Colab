@@ -14,6 +14,7 @@ import Imageselect from './components/Imageselect';
 import Canvas from './components/Konva';
 import Template from './components/board/TemplateGallery';
 import ImageGallery from './components/ImageGallery';
+import Landing from './pages/Landing';
 
 const App = () => {
   const { loading } = useFirebase();
@@ -31,6 +32,12 @@ const App = () => {
             <RedirectIfAuthenticated>
               <Signin />
             </RedirectIfAuthenticated>
+          }
+        />
+        <Route
+          path='/landing'
+          element={
+              <Landing/>
           }
         />
         <Route

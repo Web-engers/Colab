@@ -21,6 +21,8 @@
     "@mui/base": "^5.0.0-beta.61",
     "@mui/icons-material": "^6.1.5",
     "@mui/material": "^6.1.5",
+    "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.9.37",
     "axios": "^1.7.7",
     "cloudinary": "^2.5.1",
     "fabric": "^6.4.3",

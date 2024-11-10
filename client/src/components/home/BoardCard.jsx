@@ -10,7 +10,6 @@ const backgroundImages = [
   "https://i.postimg.cc/4xjV65Dy/Humaaans-Plant-5.png",
 ];
 
-// Function to get a random image
 const getRandomBackgroundImage = () => {
   const randomIndex = Math.floor(Math.random() * backgroundImages.length);
   return backgroundImages[randomIndex];
@@ -43,25 +42,31 @@ const BoardCard = ({ boardID }) => {
     };
     
     fetchUserBoards();
-  }, [boardID]); // Only run when boardID changes
+  }, [boardID]);
 
-  const handleCardClick = (boardID) => {
+  const handleCardClick = () => {
     navigate(`create/${boardID}`);
   };
 
   return (
     <button 
-      className="h-[200px] w-[150px] rounded-lg bg-slate-200 text-base flex flex-col items-center justify-center overflow-hidden"
+      className="relative h-[200px] w-[150px] rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
       aria-label={`Board ${boardID}`}
-      onClick={() => handleCardClick(boardID)}
+      onClick={handleCardClick}
       style={{
         backgroundImage: backgroundImageURL ? `url(${backgroundImageURL})` : 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <p className="font-medium">{title || 'Untitled'}</p>
-      <p className="font-light">{admin || ''}</p>
+      {/* Overlay for gradient effect */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+      {/* Text container at the bottom */}
+      <div className="absolute bottom-0 w-full p-3 bg-black bg-opacity-40 text-white text-center">
+        <p className="font-medium text-sm truncate">{title || 'Untitled'}</p>
+        <p className="font-light text-xs truncate">{admin || ''}</p>
+      </div>
     </button>
   );
 };
