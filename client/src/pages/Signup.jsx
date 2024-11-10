@@ -63,9 +63,6 @@ const SignUpPage = () => {
             textAlign: 'center',
           }}
         >
-          <Box sx={{ mb: 2 }}>
-            <img src="/path/to/logo.png" alt="Logo" style={{ height: '40px' }} />
-          </Box>
           <Typography component="h1" variant="h5" sx={{ fontWeight: '600', mb: 2 }}>
             Sign Up
           </Typography>
