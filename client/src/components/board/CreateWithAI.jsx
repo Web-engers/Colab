@@ -42,7 +42,7 @@ function CreateWithGemini({setAnchorEl}) {
       } finally {
         setLoading(false);
       }
-      setInputValue(""); // Clear input after generation
+      setInputValue(""); 
     } else {
       alert("Please enter a prompt to generate ideas.");
     }

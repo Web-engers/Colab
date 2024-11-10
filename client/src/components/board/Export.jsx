@@ -6,15 +6,15 @@ const Export = ({ handleExport }) => {
     const [anchorEl, setAnchorEl] = useState(null);  
 
     const handleExportClick = (event) => {
-        setAnchorEl(event.currentTarget); // Set the current button as the anchor
+        setAnchorEl(event.currentTarget); 
     };
 
     const handleClose = () => {
-        setAnchorEl(null);  // Close the Popover when clicked outside
+        setAnchorEl(null);  
     };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'export-popover' : undefined;  // ID for accessibility
+    const id = open ? 'export-popover' : undefined; 
 
     const handleExportButtonClick = (extension) => {
         console.log(`Exporting as ${extension}`);

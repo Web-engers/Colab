@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Popover from '@mui/material/Popover';
-import ShapeSelector from './ShapeSelector';
 import {  FaRegImage } from "react-icons/fa";
 import Imageselect from '../Imageselect';
 

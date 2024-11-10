@@ -6,7 +6,6 @@ import Canvas from '../components/Konva';
 import Cursor from '../components/liveblocks/Cursor';
 import { LiveCursors } from '../components/liveblocks/LiveCursor';
 import ChatSidebar from '../components/chats/ChatSidebar';
-import Topbar2 from '../components/board/Topbar2';
 import Settings from '../components/settings/Settings';
 import Konva from '../components/Konva';
 import SetDimension from '../components/board/SetDimension';
@@ -25,11 +24,10 @@ const Create = ({height=1200, width=800}) => {
       '255, 192, 203',  // Pink
     ];
   return (
-    <div className="flex flex-col w-screen overflow-scroll" style={{ backgroundColor: "#F2F2F2", height:height }}>
+    <div className="flex flex-col w-screen overflow-scroll bg-slate-200" style={{ height:height }}>
       <div>
         <div className='flex mr-8 justify-between'>
           <Topbar />
-          <Topbar2 />
         </div>
         <ChatSidebar/>
       </div>
