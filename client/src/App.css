@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+
+.custom-typewriter {
+  font-family: 'Courier New', Courier, monospace; /* Choose your desired font */
+  font-size: 24px; /* Adjust font size if needed */
+  color: #333; /* Change color if desired */
+}

@@ -9,6 +9,7 @@ import ChatSidebar from '../components/chats/ChatSidebar';
 import Topbar2 from '../components/board/Topbar2';
 import Settings from '../components/settings/Settings';
 import Konva from '../components/Konva';
+import SetDimension from '../components/board/SetDimension';
 const Create = ({height=1200, width=800}) => {
   const cursors = LiveCursors();
   const COLORS_PRESENCE = [
@@ -42,6 +43,7 @@ const Create = ({height=1200, width=800}) => {
           />
         ))
       }
+      <SetDimension/>
     </div>
   );
 };

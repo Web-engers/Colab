@@ -17,9 +17,8 @@ const Export = ({ handleExport }) => {
     const id = open ? 'export-popover' : undefined;  // ID for accessibility
 
     const handleExportButtonClick = (extension) => {
-        // Handle export logic based on selected extension
         console.log(`Exporting as ${extension}`);
-        handleExport(extension); // Assuming `handleExport` can handle the file extension argument
+        handleExport(extension); 
         handleClose();  // Close popover after selection
     };
 

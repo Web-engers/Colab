@@ -8,7 +8,7 @@ import { GrTemplate } from "react-icons/gr";
 import { IoText } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaFonticonsFi } from "react-icons/fa";
-
+import jsPDF from 'jspdf';
 import {
   Arrow,
   Circle,
@@ -253,14 +253,21 @@ export default function Konva({width = 400, height=400}) {
     saveToFirebase(); // Save to Firebase after editing
   };
 
-  const handleExport = () => {
-    const uri = stageRef.current.toDataURL();
-    var link = document.createElement("a");
-    link.download = "image.png";
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleExport = (extension) => {
+    if (extension === "pdf") {
+      const pdf = new jsPDF();
+      const uri = stageRef.current.toDataURL();  // Get the canvas data as a PNG URI
+      pdf.addImage(uri, "PNG", 10, 10, 180, 160);  // Add image to PDF, with positioning
+      pdf.save("download.pdf");  // Save the PDF file
+    } else {
+      const uri = stageRef.current.toDataURL();
+      const link = document.createElement("a");
+      link.download = `image.${extension}`;
+      link.href = uri;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
 
   const onClick = (e) => {
@@ -515,7 +522,7 @@ export default function Konva({width = 400, height=400}) {
                 }}
                 className='mt-[78px] ml-[25px]'
               >
-                <div><TemplateGallery setDisplayTemplate={setDisplayTemplate}/></div>
+                <div><TemplateGallery setDisplayTemplate={setDisplayTemplate}  rectangles = {rectangles} circles = {circles} arrows = {arrows} texts= {texts} scribbles = {scribbles}/></div>
             </Popover>
 
             <button onClick={deleteShape}>

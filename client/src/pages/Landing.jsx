@@ -26,13 +26,13 @@ export default function Home() {
         
         {/* Welcome text overlay with typewriter effect */}
         <div className="relative z-10 flex flex-col items-center text-center">
-          <h1 className="text-5xl font-bold text-white md:text-6xl lg:text-7xl">
+          <h1 className="text-5xl font-bold text-white md:text-6xl lg:text-7xl " style={{fontFamily:"monospace"}}>
             <Typewriter
               words={["Welcome to Cole's Canvas"]}
               loop={false}
               cursor
               cursorStyle="_"
-              typeSpeed={100}
+              typeSpeed={150}
               deleteSpeed={50}
               delaySpeed={1000}
             />

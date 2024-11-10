@@ -1,39 +1,95 @@
-// Chat.js
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
+import { arrayUnion, getDoc, doc, updateDoc, setDoc } from 'firebase/firestore';
+import { db } from '../../firebase/config';
+import { useFirebase } from '../../context/Firebase';
+import { v4 as uuidv4 } from "uuid";
 
 const socket = io('http://localhost:3001');
 
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const params = useParams();
+  const [username, setUsername] = useState('');
+  const [chatID, setChatID] = useState('');
+  const { currentUser } = useFirebase();
 
   useEffect(() => {
-    socket.on('chatMessage', (msg) => {
-      setMessages((prevMessages) => [...prevMessages, msg]);
-    });
+    setUsername(currentUser?.name || 'Guest');
+  
+    const fetchData = async () => {
+      try {
+        const boardRef = doc(db, 'boards', params.id);
+        const boardDoc = await getDoc(boardRef);
+        const boardData = boardDoc.data();
+  
+        if (boardData) {
+          let chatID = boardData.chatID;
+  
+          if (!chatID) {
+            chatID = uuidv4();
+            await updateDoc(boardRef, { chatID });
+          }
+  
+          setChatID(chatID);
+  
+          const chatRef = doc(db, 'chats', chatID);
+          const chatDoc = await getDoc(chatRef);
+  
+          if (!chatDoc.exists()) {
+            await setDoc(chatRef, { messages: [] });
+            setMessages([]); 
+          } else {
+            setMessages(chatDoc.data().messages || []);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, [params.id, currentUser]);
 
+  useEffect(() => {
+    socket.on('chatMessage', async (msg) => {
+      const chatRef = doc(db, "chats", chatID); // You need to pass the correct chatRef
+      const chatDoc = await getDoc(chatRef); // Get the latest messages
+      const allmes = chatDoc.data()?.messages || []; // Ensure safe access to the data
+      setMessages(allmes); // Update state with the new messages
+    });
     return () => {
       socket.off('chatMessage');
     };
   }, []);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (message.trim()) {
-      const username = 'User'; // Replace with actual username logic if needed
-      socket.emit('chatMessage', { username, message });
+      const msgData = { username, message };
+      socket.emit('chatMessage', msgData); // Emit message to server
+      try {
+        const chatRef = doc(db, 'chats', chatID);
+        await updateDoc(chatRef, {
+          messages: arrayUnion(msgData), // Append message to Firestore
+        });
+        const chatDoc = await getDoc(chatRef); // Get the updated messages
+        const allmes = chatDoc.data()?.messages || []; // Access messages safely
+        setMessages(allmes); // Update state with the new messages
+      } catch (error) {
+        console.error('Error updating messages:', error);
+      }
       setMessage('');
     }
   };
-
+  
   return (
     <div className="h-full flex flex-col">
-      {/* Chat Header */}
       <div className="h-12 bg-gray-200 text-gray-800 flex items-center justify-center p-2 font-semibold">
         Chat Room
       </div>
 
-      {/* Chat Messages Area */}
       <div className="flex-grow overflow-y-auto bg-white p-4 space-y-2">
         {messages.map((msg, index) => (
           <div
@@ -51,7 +107,6 @@ const Chat = () => {
         ))}
       </div>
 
-      {/* Message Input Section */}
       <div className="bg-gray-100 p-2 flex items-center">
         <input
           type="text"
