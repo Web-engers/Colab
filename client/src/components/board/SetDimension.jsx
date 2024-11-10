@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SetDimension = ({ height, setHeight, width, setWidth }) => {
-  const increaseHeight = () => setHeight((height) => Math.max(1200,height + 10));
+  const increaseHeight = () => setHeight((height) => Math.min(1200,height + 10));
   const decreaseHeight = () => setHeight((height) => Math.max(0, height - 10));
 
   const increaseWidth = () => setWidth((width) => Math.min(1200,width + 10));
@@ -21,7 +21,7 @@ const SetDimension = ({ height, setHeight, width, setWidth }) => {
           id="height"
           type="text"
           value={height}
-          readOnly
+          onChange={()=>{setHeight(height)}}
           className="w-12 text-center border border-gray-300 rounded p-0.5 mb-1 text-xs"
         />
         <button
@@ -43,7 +43,7 @@ const SetDimension = ({ height, setHeight, width, setWidth }) => {
           id="width"
           type="text"
           value={width}
-          readOnly
+          onChange={()=>{setWidth(width)}}
           className="w-12 text-center border border-gray-300 rounded p-0.5 mb-1 text-xs"
         />
         <button

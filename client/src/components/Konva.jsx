@@ -52,6 +52,7 @@ export default function Konva({width = 400, height=400}) {
   const [showFont, setShowFont] = useState(false)
   const [displayTemplate, setDisplayTemplate] = useState(null)
 
+
   const strokeColor = "#000";
   const isDraggable = action === ACTIONS.SELECT;
 

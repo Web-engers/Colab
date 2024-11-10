@@ -10,7 +10,11 @@ import Topbar2 from '../components/board/Topbar2';
 import Settings from '../components/settings/Settings';
 import Konva from '../components/Konva';
 import SetDimension from '../components/board/SetDimension';
+import { useState } from 'react';
+
 const Create = ({height=1200, width=800}) => {
+  const [height1, setHeight1] = useState(height)
+  const [width1, setWidth1] = useState(width)
   const cursors = LiveCursors();
   const COLORS_PRESENCE = [
       '255, 99, 71',    // Tomato
@@ -30,7 +34,7 @@ const Create = ({height=1200, width=800}) => {
         <ChatSidebar/>
       </div>
       <div className='flex flex-row gap-36 justify-items-start'>
-        <Konva height={height} width={width} />
+        <Konva height={height1} width={width1} />
 
       </div>
       {
@@ -43,7 +47,7 @@ const Create = ({height=1200, width=800}) => {
           />
         ))
       }
-      <SetDimension/>
+      <SetDimension setHeight={setHeight1} setWidth={setWidth1} height={height1} width={width1}/>
     </div>
   );
 };
