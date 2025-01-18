@@ -15,7 +15,7 @@ export const Imagebutton = () => {
       setAnchorEl(null);
     };
   
-    const open = Boolean(anchorEl); // Determine if the popover should be open
+    const open = Boolean(anchorEl);
     const id = open ? 'ai-popover' : undefined;
   
     return (

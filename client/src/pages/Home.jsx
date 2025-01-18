@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/home/Navbar';
 import BoardCard from '../components/home/BoardCard';
 import CreateNew from '../components/home/CreateNewBoard';
+import { all } from 'axios';
 
 const Home = () => {
   const { currentUser, loading } = useFirebase();
@@ -40,7 +41,7 @@ const Home = () => {
     <div className="flex-col">
       {currentUser ? (
         <div>
-          <Navbar />
+          <Navbar allBoards={allBoards} setAllBoards={setAllBoards}/>
           <div className='grid grid-cols-8 gap-2 m-3'>
             <CreateNew />
             {allBoards.map((boardID) => (

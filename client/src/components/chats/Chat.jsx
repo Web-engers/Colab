@@ -55,10 +55,14 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on('chatMessage', async (msg) => {
-      const chatRef = doc(db, "chats", chatID); // You need to pass the correct chatRef
-      const chatDoc = await getDoc(chatRef); // Get the latest messages
-      const allmes = chatDoc.data()?.messages || []; // Ensure safe access to the data
-      setMessages(allmes); // Update state with the new messages
+      const chatRef = doc(db, "chats", chatID); 
+      const chatDoc = await getDoc(chatRef);
+      const allmes = chatDoc.data()?.messages || []; 
+      console.log(msg)
+      setMessages(prev=>{
+        [...prev,msg]
+      }); 
+      console.log(messages)
     });
     return () => {
       socket.off('chatMessage');
@@ -68,11 +72,11 @@ const Chat = () => {
   const sendMessage = async () => {
     if (message.trim()) {
       const msgData = { username, message };
-      socket.emit('chatMessage', msgData); // Emit message to server
+      socket.emit('chatMessage', msgData); 
       try {
         const chatRef = doc(db, 'chats', chatID);
         await updateDoc(chatRef, {
-          messages: arrayUnion(msgData), // Append message to Firestore
+          messages: arrayUnion(msgData), 
         });
         const chatDoc = await getDoc(chatRef); // Get the updated messages
         const allmes = chatDoc.data()?.messages || []; // Access messages safely
@@ -91,7 +95,7 @@ const Chat = () => {
       </div>
 
       <div className="flex-grow overflow-y-auto bg-white p-4 space-y-2">
-        {messages.map((msg, index) => (
+        {messages?.map((msg, index) => (
           <div
             key={index}
             className={`flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}

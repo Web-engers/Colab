@@ -19,7 +19,7 @@ const Export = ({ handleExport }) => {
     const handleExportButtonClick = (extension) => {
         console.log(`Exporting as ${extension}`);
         handleExport(extension); 
-        handleClose();  // Close popover after selection
+        handleClose();  
     };
 
     return (
@@ -29,9 +29,9 @@ const Export = ({ handleExport }) => {
             </button>
             <Popover
                 id={id}
-                open={open}  // Conditionally render popover based on `open`
-                anchorEl={anchorEl}  // Anchor element is the button
-                onClose={handleClose}  // Close popover when clicked outside
+                open={open}  
+                anchorEl={anchorEl}  
+                onClose={handleClose} 
                 anchorOrigin={{
                     vertical: 'center',
                     horizontal:'center'
@@ -64,4 +64,6 @@ const Export = ({ handleExport }) => {
     );
 };
 
-export default Export;
+export default Export
+
+

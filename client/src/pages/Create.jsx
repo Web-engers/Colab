@@ -1,12 +1,8 @@
 import React from 'react';
-import Sideoptions from '../components/settings/Sideoptions';
 import Topbar from '../components/board/Topbar';
-import ShapeSelector from '../components/settings/ShapeSelector';
-import Canvas from '../components/Konva';
 import Cursor from '../components/liveblocks/Cursor';
 import { LiveCursors } from '../components/liveblocks/LiveCursor';
 import ChatSidebar from '../components/chats/ChatSidebar';
-import Settings from '../components/settings/Settings';
 import Konva from '../components/Konva';
 import SetDimension from '../components/board/SetDimension';
 import { useState } from 'react';

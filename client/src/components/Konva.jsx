@@ -27,12 +27,13 @@ import { useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { CiImageOn } from "react-icons/ci";
-import Export from "./board/Export";
+import Export from "../components/board/Export"
 import ImageGallery from "./ImageGallery";
 import { Popover } from "@mui/material";
 import TemplateGallery from "./board/TemplateGallery";
+import { Aibutton } from "./board/CreateWithAI";
 
-export default function Konva({width = 400, height=400}) {
+export default function Konva({width = 400, height=400, setWidth, setHeight}) {
   const params = useParams();
   const stageRef = useRef();
   const transformerRef = useRef();
@@ -51,6 +52,7 @@ export default function Konva({width = 400, height=400}) {
   const [selectedNode, setSelectedNode] = useState(null)
   const [showFont, setShowFont] = useState(false)
   const [displayTemplate, setDisplayTemplate] = useState(null)
+  const [currentText, setCurrentText] = useState("Add Text")
 
 
   const strokeColor = "#000";
@@ -58,10 +60,12 @@ export default function Konva({width = 400, height=400}) {
 
   useEffect(() => {
     if(!params.id) return
+    console.log("searching for saved canva")
     const fetchData = async () => {
   
       try {
         const docSnap = await getDoc(doc(db, "boards", params.id));
+        console.log(" saved canva found")
         if (docSnap.exists()) {
           setSavedData(docSnap.data().canvas);
           if (savedData) {
@@ -71,6 +75,11 @@ export default function Konva({width = 400, height=400}) {
             setScribbles(savedData.scribbles || []);
             setImages(savedData.images || []);
             setTexts(savedData.texts || []);
+            if(savedData.size){
+              console.log("size saving to ", savedData.size)
+              setWidth(savedData.size.width)
+              setHeight(savedData.size.height)
+            }
           }
         } else {
           console.log("No such document!");
@@ -112,7 +121,8 @@ export default function Konva({width = 400, height=400}) {
       circles,
       arrows,
       scribbles,
-      texts
+      texts,
+      size:{width:width, height:height}
     };
 
     try {
@@ -250,7 +260,7 @@ export default function Konva({width = 400, height=400}) {
 
   const onPointerUp = () => {
     setIsPaining(false);
-    setAction("SELECT")
+    if(action != "SCRIBBLE") setAction("SELECT")
     saveToFirebase(); // Save to Firebase after editing
   };
 
@@ -271,16 +281,37 @@ export default function Konva({width = 400, height=400}) {
     }
   };
 
+  // useEffect(() => {
+  //   if(selectedShape != "Text") return
+  //   const handleKeyDown = (event) => {
+  //     console.log(event.key)
+  //     if(event.key.length != 1) return
+  //     setCurrentText((prev) => prev + event.key);
+  //   };
+  
+  //   window.addEventListener('keydown', handleKeyDown);
+  
+  //   // Cleanup event listener on component unmount
+  //   return () => {
+  //     window.removeEventListener('keydown', handleKeyDown);
+  //   };
+  // });
+
   const onClick = (e) => {
     if (action !== ACTIONS.SELECT) return;
     const target = e.currentTarget;
     console.log(target)
-    let str = target.constructor.name;  // Change const to let
-    str = str.substring(0, str.length - 1); // Stripping the 'Node' from the class name
+    let str = target.constructor.name;  
+    str = str.substring(0, str.length - 1); 
   
     if (transformerRef.current) {
       setSelectedShape(str);
       setSelectedNode(target);
+      // if(selectedShape === "Text") {
+      //   handleTextChange()
+      // }
+      console.log(target)
+     
       transformerRef.current.nodes([target]);
       saveToFirebase()
     }
@@ -344,6 +375,26 @@ export default function Konva({width = 400, height=400}) {
 
     saveToFirebase()
   };
+
+//   const handleTextChange = (e) => {
+//     console.log("yext change called")
+//     if (!selectedShape) return;
+//     console.log(selectedNode)
+
+//     if (selectedShape === "Text") {
+//       setTexts((prev) =>
+//         prev.map((text) => {
+//           if (text.id === selectedNode.attrs.id) {
+//             return { ...text, text: currentText};
+//           }
+//           return text;
+//         })
+//       );
+
+//     saveToFirebase()
+//   };
+// }
+
 
   const deleteShape = () => {
     // if (!selectedShape) return;
@@ -437,7 +488,8 @@ export default function Konva({width = 400, height=400}) {
 
   return (
     <div className="h-5/6 relative w-full overflow-hidden flex  justify-between">
-          <div className="flex flex-col justify-center items-center gap-3 py-2 px-3 ml-4 w-[60px] border shadow-lg rounded-lg z-10 bg-white h-[550px] overflow-visible">
+          <div className="flex flex-col justify-center items-center gap-3 py-2 px-3 ml-4 w-[60px] border shadow-lg rounded-lg z-10 bg-white h-[600px] overflow-visible">
+            <Aibutton/>
             <button
               className={action === ACTIONS.SELECT ? "bg-violet-300 p-1 rounded" : "p-1 hover:bg-violet-100 rounded"}
               onClick={() => setAction(ACTIONS.SELECT)}

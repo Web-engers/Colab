@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase/config';
+import { useParams } from 'react-router-dom';
 
-const SetDimension = ({ height, setHeight, width, setWidth }) => {
-  const increaseHeight = () => setHeight((height) => Math.min(1200,height + 10));
-  const decreaseHeight = () => setHeight((height) => Math.max(0, height - 10));
+const SetDimension = ({ height, setHeight, width, setWidth}) => {
+  const params = useParams()
+  const increaseHeight = () => setHeight((prevHeight) => Math.min(1200, prevHeight + 10));
+  const decreaseHeight = () => setHeight((prevHeight) => Math.max(0, prevHeight - 10));
+  const increaseWidth = () => setWidth((prevWidth) => Math.min(1200, prevWidth + 10));
+  const decreaseWidth = () => setWidth((prevWidth) => Math.max(0, prevWidth - 10));
 
-  const increaseWidth = () => setWidth((width) => Math.min(1200,width + 10));
-  const decreaseWidth = () => setWidth((width) => Math.max(0, width - 10));
+  const updateDimension = async () => {
+    try {
+      console.log("changing size")
+      const currData = await getDoc(doc(db, "boards", params.id));
+      const currCanva = currData.data().canvas; 
+      await updateDoc(doc(db, "boards", params.id), {
+        canvas: { ...currCanva, size:{width, height} }
+      });
+      console.log("Data saved successfully to Firebase");
+    } catch (error) {
+      console.error("Error saving data to Firebase: ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (height && width) {
+      updateDimension();
+    }
+  }, [height, width]);
 
   return (
     <div className="fixed bottom-2 right-2 flex space-x-3 p-2 bg-gray-100 rounded-md shadow-sm">
@@ -19,9 +42,9 @@ const SetDimension = ({ height, setHeight, width, setWidth }) => {
         <label htmlFor="height" className="text-xs font-medium text-gray-700 mb-1">H</label>
         <input
           id="height"
-          type="text"
+          type="number"
           value={height}
-          onChange={()=>{setHeight(height)}}
+          onChange={(e) => setHeight(Number(e.target.value))}
           className="w-12 text-center border border-gray-300 rounded p-0.5 mb-1 text-xs"
         />
         <button
@@ -41,9 +64,9 @@ const SetDimension = ({ height, setHeight, width, setWidth }) => {
         <label htmlFor="width" className="text-xs font-medium text-gray-700 mb-1">W</label>
         <input
           id="width"
-          type="text"
+          type="number"
           value={width}
-          onChange={()=>{setWidth(width)}}
+          onChange={(e) => setWidth(Number(e.target.value))}
           className="w-12 text-center border border-gray-300 rounded p-0.5 mb-1 text-xs"
         />
         <button

@@ -4,8 +4,6 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 
-
-
 const firebaseConfig = {
     apiKey: "AIzaSyDLai-AJcWxboiLDzuruYdfI1jXPJTv2jo",
     authDomain: "colab-571e9.firebaseapp.com",

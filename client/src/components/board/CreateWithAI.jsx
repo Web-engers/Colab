@@ -108,7 +108,7 @@ export const Aibutton = () => {
         onClick={handleShareClick}
       >
         <img
-          className="h-[30px] w-[75px] pl-3"
+          className="h-[30px] w-[95px]"
           src="https://i.ibb.co/m0NmKkR/Screenshot-2024-11-09-at-12-19-51-PM.png"
           alt="Ask AI"
         />
@@ -128,7 +128,7 @@ export const Aibutton = () => {
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        className='mt-[130px]'
+        className='mt-[130px] ml-[20px]'
       >
         <div><CreateWithGemini setAnchorEl={setAnchorEl}/></div>
       </Popover>

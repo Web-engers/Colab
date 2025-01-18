@@ -29,7 +29,6 @@ const Topbar2 = () => {
         <FaShareAlt size={20} />
       </button>
       
-      {/* Popover */}
       <Popover
         open={open}
         anchorEl={anchorEl}
